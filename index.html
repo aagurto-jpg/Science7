@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Science Quest 7 · Designed by Mr. Agurto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2d3436;--ok:#00b894;--bad:#ff7675;--gold:#fdcb6e}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:linear-gradient(135deg,#a29bfe,#74b9ff 50%,#81ecec);background-attachment:fixed;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,.title{font-family:'Baloo 2',Nunito,sans-serif;margin:.2em 0;line-height:1.15}
+#credit{position:sticky;top:0;z-index:60;text-align:center;font-family:'Baloo 2',sans-serif;font-weight:800;color:#fff;background:linear-gradient(90deg,#ff6b6b,#feca57,#1dd1a1,#54a0ff,#5f27cd,#ff6b6b);background-size:300% 100%;animation:slide 10s linear infinite;padding:6px 10px;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.4);font-size:15px}
+@keyframes slide{to{background-position:300% 0}}
+#app{max-width:920px;margin:0 auto;padding:12px 16px 70px}
+#app.enter>*{animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.topnav{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:18px;padding:8px 10px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.navtitle{flex:1;font-family:'Baloo 2';font-weight:800;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.navbtn{border:0;background:#f1f2f6;border-radius:12px;font-size:20px;width:42px;height:42px;cursor:pointer;flex:none}
+.navbtn:active,.btn:active,.opt:active,.bin:active,.act:active{transform:scale(.95)}
+.chip{border:0;background:#ffeaa7;border-radius:999px;padding:7px 11px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit;color:var(--ink)}
+.chip.lvl{background:#dfe6e9}
+.panel{background:#fff;border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.12);margin-bottom:16px}
+.center{text-align:center}
+.btn{border:0;border-radius:16px;padding:12px 20px;font-size:17px;font-weight:800;font-family:'Baloo 2',sans-serif;background:#6c5ce7;color:#fff;cursor:pointer;box-shadow:0 5px 0 #4834d4;transition:transform .1s;margin:6px}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.alt{background:#fff;color:#6c5ce7;box-shadow:0 5px 0 #c8c2f5}
+.btn.green{background:#00b894;box-shadow:0 5px 0 #00876c}
+.btn.big{font-size:21px;padding:14px 28px}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:10px 0}
+.inp{width:100%;max-width:340px;font-size:20px;padding:12px 14px;border-radius:14px;border:3px solid #dfe6e9;font-family:inherit;outline:none;text-align:center}
+.inp:focus{border-color:#6c5ce7}
+.lbl{display:block;font-weight:800;margin:16px 0 8px}
+.bigemoji{font-size:64px;line-height:1}
+.bounce{animation:bounce 1.6s ease-in-out infinite}
+@keyframes bounce{50%{transform:translateY(-10px)}}
+.spin{animation:spin 1s ease}
+@keyframes spin{from{transform:rotate(-180deg) scale(.2)}to{transform:none}}
+.pop-in{animation:popin .4s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes popin{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.avatars{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:420px;margin:0 auto}
+.av{font-size:30px;width:54px;height:54px;border-radius:16px;border:3px solid transparent;background:#f1f2f6;cursor:pointer}
+.av.sel{border-color:#6c5ce7;background:#e8e4ff;transform:scale(1.1)}
+/* home */
+.hero{display:flex;gap:16px;align-items:center;background:#fff;border-radius:24px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.12);margin-bottom:14px}
+.avatar{background:linear-gradient(135deg,#ffeaa7,#fab1a0);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar.big{width:76px;height:76px;font-size:44px}
+.hero h1{font-size:28px}
+.rank{font-weight:800;color:#6c5ce7}
+.xpbar{height:16px;background:#dfe6e9;border-radius:99px;overflow:hidden;margin:6px 0 2px}
+.xpbar div{height:100%;background:linear-gradient(90deg,#fdcb6e,#e17055);border-radius:99px;transition:width .6s}
+.lightning{display:block;width:100%;border:0;border-radius:22px;padding:16px;font-size:24px;font-family:'Baloo 2';font-weight:800;color:#fff;background:linear-gradient(90deg,#fd79a8,#e17055,#fdcb6e);cursor:pointer;box-shadow:0 6px 0 #c0392b;margin-bottom:16px;animation:glow 2s ease-in-out infinite}
+.lightning small{display:block;font-size:14px;font-family:Nunito;opacity:.95}
+@keyframes glow{50%{filter:brightness(1.12)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.utile{border:0;text-align:left;border-radius:22px;padding:18px;color:#fff;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .15s;font-family:inherit}
+.utile:hover{transform:translateY(-4px) rotate(-.5deg)}
+.utile .ue{font-size:46px;position:absolute;right:12px;top:8px;opacity:.9}
+.utile h3{font-size:22px;margin-right:56px}
+.utile .stars{font-size:18px;letter-spacing:2px}
+.ubar{height:8px;background:rgba(255,255,255,.35);border-radius:9px;margin-top:8px;overflow:hidden}
+.ubar div{height:100%;background:#fff;border-radius:9px}
+/* unit */
+.unithero{display:flex;gap:16px;align-items:center;color:#fff;border-radius:24px;padding:20px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.unithero h1{font-size:28px}
+.stars{font-size:22px;letter-spacing:3px}
+.acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.act{border:0;background:#fff;border-radius:20px;padding:18px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 6px 0 #dfe6e9;position:relative;font-family:inherit;color:var(--ink);font-size:17px;transition:transform .12s}
+.act:hover{transform:translateY(-3px)}
+.act .ae{font-size:40px}
+.act small{color:#636e72;text-align:center}
+.act.done{box-shadow:0 6px 0 #fdcb6e;background:#fffbea}
+.tick{position:absolute;top:6px;right:10px}
+/* learn */
+.counter{text-align:center;color:#fff;font-weight:800;margin-bottom:8px;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.card3d{perspective:1100px;width:100%;max-width:540px;height:320px;margin:0 auto;cursor:pointer}
+.inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
+.card3d.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;box-shadow:0 14px 34px rgba(0,0,0,.2)}
+.front{color:#fff}
+.front h2{font-size:30px}
+.front .cemoji{font-size:80px}
+.back{background:#fff;transform:rotateY(180deg);font-size:19px;line-height:1.5;overflow:auto}
+.back h3{font-size:22px;margin-bottom:8px}
+.dots{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin:14px 0}
+.dot{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.5)}
+.dot.seen{background:#fff}
+.dot.cur{background:#fdcb6e;transform:scale(1.3)}
+/* quiz */
+.qhead{display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px}
+.streak.hot{color:#e17055;animation:bounce .8s infinite}
+.prog{height:12px;background:#dfe6e9;border-radius:9px;overflow:hidden;margin:6px 0 10px}
+.prog div{height:100%;background:linear-gradient(90deg,#00cec9,#6c5ce7);transition:width .4s}
+.q{font-size:23px;margin:10px 0 16px}
+.opts{display:grid;gap:10px}
+.opt{border:3px solid #dfe6e9;background:#fff;border-radius:16px;padding:14px 16px;font-size:18px;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);font-weight:700;transition:transform .1s,background .2s}
+.opt:hover:not(:disabled){border-color:#a29bfe;background:#f5f3ff}
+.opt.right{background:#55efc4;border-color:#00b894}
+.opt.wrong{background:#fab1a0;border-color:#e17055;animation:shake .4s}
+.opt:disabled{cursor:default}
+.fb{margin-top:14px;padding:14px;border-radius:16px;font-weight:800;font-size:19px;text-align:center;animation:popin .35s both}
+.fb.ok{background:#dffff4;color:#00876c}
+.fb.no{background:#ffeceb;color:#c0392b}
+.fb p{font-weight:600;font-size:16px;color:var(--ink);margin:6px 0}
+.tag{display:inline-block;color:#fff;border-radius:99px;padding:4px 12px;font-weight:800;font-size:14px}
+/* sort */
+.sorttitle{font-weight:800;font-size:18px;color:#6c5ce7}
+.sortitem{font-size:24px;font-weight:800;background:#fff7d6;border:3px dashed #fdcb6e;border-radius:20px;padding:24px 16px;margin:10px auto 18px;max-width:480px;font-family:'Baloo 2'}
+.sortitem.flyok{animation:fly .6s forwards}
+@keyframes fly{to{transform:translateY(70px) scale(.3);opacity:0}}
+.bins{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+.bins.b3{grid-template-columns:repeat(3,1fr)}
+.bin{border:0;border-radius:18px;padding:18px 8px;font-size:18px;font-weight:800;color:#fff;background:var(--c);cursor:pointer;font-family:'Baloo 2';box-shadow:0 5px 0 rgba(0,0,0,.18)}
+.bin.right{outline:5px solid #00b894}
+.bin.wrong{animation:shake .4s;opacity:.5}
+.bin.hint{outline:5px dashed #00b894;animation:bounce .6s 2}
+@media(max-width:480px){.bins.b3{grid-template-columns:1fr}}
+/* match */
+.mhead{display:flex;justify-content:space-between;gap:6px;font-weight:800;font-size:15px;margin-bottom:12px;flex-wrap:wrap}
+.mcols{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
+.mcols>div{display:flex;flex-direction:column;gap:8px}
+.mbtn{border:3px solid #dfe6e9;background:#fff;border-radius:14px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink);min-height:58px;transition:all .2s}
+.mbtn.L{background:#f5f3ff;font-weight:800}
+.mbtn.sel{border-color:#6c5ce7;background:#e8e4ff;transform:scale(1.04)}
+.mbtn.ok{border-color:#00b894;background:#55efc4;opacity:.75;cursor:default;transform:scale(.97)}
+.mbtn.no{border-color:#e17055;background:#fab1a0;animation:shake .4s}
+/* calc */
+.calcstats{font-weight:700;color:#636e72}
+.calcq{font-size:19px;margin:10px 0}
+.calcq .ask{font-size:22px;font-weight:800;color:#6c5ce7}
+.calcin{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap}
+.inp.num{max-width:170px;font-size:24px;font-weight:800}
+.unit{font-weight:800;font-size:20px}
+.hint{margin:14px auto;max-width:460px;background:#fffbea;border-radius:14px;padding:10px;text-align:left}
+.hint summary{cursor:pointer;font-weight:800}
+.nuc{display:inline-flex;align-items:center;font-size:54px;font-weight:800;font-family:'Baloo 2';margin:0 14px}
+.nuc .ls{display:inline-flex;flex-direction:column;font-size:.42em;line-height:1.05;text-align:right;margin-right:3px;color:#6c5ce7}
+.nuc .chg{font-size:.42em;align-self:flex-start;color:#e17055;margin-left:2px}
+/* lightning */
+.lhead{display:flex;justify-content:space-between;align-items:center;color:#fff;font-family:'Baloo 2';font-weight:800;font-size:30px;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+.bar{height:14px;background:rgba(255,255,255,.4);border-radius:9px;overflow:hidden;margin:6px 0 14px}
+.bar div{height:100%;background:linear-gradient(90deg,#fdcb6e,#e17055);width:100%}
+/* badges */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.badge{background:#fff;border-radius:20px;padding:14px 10px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.1)}
+.badge .be{font-size:46px;display:block}
+.badge.locked .be{filter:grayscale(1);opacity:.35}
+.badge.locked{background:#f1f2f6}
+.badge b{display:block;font-family:'Baloo 2';font-size:17px}
+.badge small{color:#636e72}
+/* report */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid #dfe6e9;text-align:center}
+th{background:#f5f3ff}
+td:first-child,th:first-child{text-align:left}
+.rephead{display:flex;gap:14px;align-items:center}
+.tablewrap{overflow-x:auto}
+textarea{width:100%;min-height:90px;border-radius:14px;border:3px solid #dfe6e9;padding:10px;font-family:monospace;font-size:12px}
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(45,52,54,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.popcard{background:#fff;border-radius:28px;padding:26px;text-align:center;max-width:360px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.popcard .bigemoji{font-size:84px}
+#toasts{position:fixed;top:44px;right:12px;z-index:150;display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:none}
+.toast{background:#2d3436;color:#fff;font-weight:800;padding:8px 14px;border-radius:99px;animation:toast 1.6s forwards;font-size:15px}
+@keyframes toast{0%{opacity:0;transform:translateY(-10px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-12px)}}
+.conf{position:fixed;top:-12px;width:10px;height:14px;z-index:300;border-radius:2px;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(760deg)}}
+.result .bigemoji{font-size:90px}
+.big3{font-size:44px;letter-spacing:6px}
+@media(max-width:560px){
+ .navtitle{font-size:15px}.chip{font-size:12px;padding:6px 8px}
+ .hero h1,.unithero h1{font-size:23px}.q{font-size:20px}.opt{font-size:16px}
+ .card3d{height:300px}.front h2{font-size:25px}.back{font-size:17px}
+ .mcols{grid-template-columns:1fr 1.3fr}.mbtn{font-size:13px;padding:10px 6px}
+ .nuc{font-size:44px}
+}
+@media print{
+ body{background:#fff}.topnav,.noprint{display:none!important}
+ .panel{box-shadow:none}#credit{position:static;color:#000;text-shadow:none;background:#fff;animation:none}
+}
+</style>
+</head>
+<body>
+<div id="credit">✨ Designed by Mr. Agurto 2026 ✨</div>
+<main id="app"></main>
+<div id="toasts"></div>
+<script>
+/* =========================================================
+   SCIENCE QUEST 7 — Designed by Mr. Agurto 2026
+   Content format:
+   cards: [emoji, title, text]
+   quiz:  [question, [CORRECT, wrong, wrong, wrong], explanation]
+          (correct answer is always written first; it is shuffled on screen)
+   sort:  {title, bins:[...], items:[[text, binIndex], ...]}
+   match: [[term, partner], ...]
+   ========================================================= */
+const UNITS = [
+{id:'method',name:'Scientific Method & Lab Skills',short:'Method',emoji:'🔬',color:'#6c5ce7',
+ blurb:'Inquiry, design, process, evaluate, variables, Bunsen burner and graduated cylinder.',calc:null,
+ cards:[
+  ['🧭','The 4 Stages','Every investigation follows 4 stages: <b>Inquiry → Design → Process → Evaluate</b>.<br>Think: <i>Ask → Plan → Do → Judge</i>.'],
+  ['❓','Inquiry','Ask a <b>research question</b> you can test, research the topic, and write a <b>hypothesis</b>.'],
+  ['🔮','Hypothesis','A testable prediction:<br><b>If</b> I change … <b>then</b> … will happen, <b>because</b> … (scientific reason).'],
+  ['📐','Design','Plan the experiment: identify the <b>variables</b>, list the <b>materials</b>, write a step-by-step <b>method</b> and safety rules.'],
+  ['📊','Process','Do the experiment, <b>collect data</b> in a table, draw a <b>graph</b>, and describe the pattern you see.'],
+  ['⚖️','Evaluate','Was your hypothesis <b>supported</b>? What were the <b>limitations</b>? Suggest <b>improvements</b>.'],
+  ['🎛️','Independent Variable','The variable <b>you change</b> on purpose. It goes on the <b>x-axis</b> of a graph.'],
+  ['📏','Dependent Variable','The variable <b>you measure</b>. It changes because of the independent variable. It goes on the <b>y-axis</b>.'],
+  ['🔒','Controlled Variables','Everything you keep <b>the same</b> so the test is <b>fair</b>. Only ONE thing should change!'],
+  ['🔥','Bunsen Burner Parts','<b>Base</b> (keeps it stable), <b>gas hose/inlet</b>, <b>gas valve</b> (controls gas), <b>collar</b> with <b>air hole</b> (controls air), <b>barrel</b> (gas and air mix).'],
+  ['🟡','Safety Flame','Air hole <b>closed</b> → <b>yellow</b>, wavy, easy-to-see flame. Use it when you are not heating anything.'],
+  ['🔵','Heating Flame','Air hole <b>open</b> → <b>blue</b>, roaring, much <b>hotter</b> flame. The hottest point is just above the tip of the inner blue cone.'],
+  ['🥽','Lighting Safely','Goggles on, hair tied back. Close the air hole, light the match or striker first, then open the gas. Never leave a flame alone!'],
+  ['🧪','Graduated Cylinder','Measures the <b>volume</b> of liquids in <b>mL</b>. Place it on a flat surface and read the <b>bottom of the meniscus</b> at <b>eye level</b>.']
+ ],
+ quiz:[
+  ['What is the correct order of the stages of a scientific investigation?',['Inquiry → Design → Process → Evaluate','Design → Inquiry → Evaluate → Process','Process → Inquiry → Design → Evaluate','Evaluate → Design → Process → Inquiry'],'Ask → Plan → Do → Judge.'],
+  ['A student tests whether water temperature affects how fast sugar dissolves. What is the INDEPENDENT variable?',['Temperature of the water','Time for the sugar to dissolve','Type of sugar','Size of the cup'],'The independent variable is the one you change on purpose.'],
+  ['In the same sugar experiment, what is the DEPENDENT variable?',['Time for the sugar to dissolve','Temperature of the water','Amount of water','The spoon used'],'The dependent variable is the one you measure.'],
+  ['Why do we keep the controlled variables the same?',['To make it a fair test','To make the experiment faster','To change the results','So we can skip the method'],'If other things change too, we can’t know what caused the result.'],
+  ['Which is a well-written hypothesis?',['If water temperature increases, then sugar dissolves faster, because particles move faster.','Sugar is sweet.','I think the experiment will be fun.','Does sugar dissolve?'],'It has If… then… because… and can be tested.'],
+  ['In which stage do you collect data and draw graphs?',['Process','Inquiry','Design','Evaluate'],''],
+  ['In which stage do you suggest improvements to your method?',['Evaluate','Design','Inquiry','Process'],''],
+  ['In which stage do you write a research question?',['Inquiry','Process','Evaluate','Design'],''],
+  ['On a graph, the independent variable usually goes on the…',['x-axis (horizontal)','y-axis (vertical)','title','key'],''],
+  ['Which Bunsen burner flame is the “safety flame”?',['Yellow flame – air hole closed','Blue flame – air hole open','Green flame','Invisible flame'],'The yellow flame is easy to see and cooler.'],
+  ['To get the hottest blue flame you should…',['Open the air hole','Close the air hole','Turn off the gas','Cover the barrel'],'More air = more complete burning = hotter flame.'],
+  ['Which part of the Bunsen burner controls the amount of air?',['The collar (air hole)','The base','The gas hose','The top of the barrel'],''],
+  ['When reading a graduated cylinder you should look at…',['The bottom of the meniscus at eye level','The top of the meniscus from above','The side of the cylinder from below','The highest mark on the cylinder'],''],
+  ['What does a graduated cylinder measure?',['Volume of a liquid (mL)','Mass (g)','Length (cm)','Temperature (°C)'],''],
+  ['What is the safest way to light a Bunsen burner?',['Light the match first, then turn on the gas','Turn on the gas, then look for matches','Open the air hole fully, then turn on the gas','Lean over the barrel to see better'],'Never let unburnt gas build up!']
+ ],
+ sort:{title:'Which stage does it belong to?',bins:['Inquiry','Design','Process','Evaluate'],items:[
+  ['Write a research question',0],['Write a hypothesis',0],['Research background information',0],
+  ['Identify the variables',1],['List materials and safety rules',1],['Write a step-by-step method',1],
+  ['Record results in a table',2],['Draw a graph',2],['Describe the trend in the data',2],
+  ['Decide if the hypothesis was supported',3],['Discuss limitations and errors',3],['Suggest improvements',3]]},
+ match:[
+  ['Independent variable','The variable you change'],['Dependent variable','The variable you measure'],
+  ['Controlled variable','Kept the same for a fair test'],['Hypothesis','A testable prediction: If… then… because…'],
+  ['Meniscus','The curved surface of a liquid'],['Barrel','Tube where gas and air mix'],
+  ['Collar','Turns to open or close the air hole'],['Gas valve','Controls how much gas flows'],
+  ['Graduated cylinder','Measures the volume of liquids'],['Fair test','Only one variable is changed']]
+},
+{id:'chem',name:'Chemistry: Matter & Atoms',short:'Chemistry',emoji:'⚗️',color:'#00a8a8',
+ blurb:'Matter, physical and chemical changes, atoms, ions, isotopes, isotones and isobars.',calc:'chem',
+ cards:[
+  ['🧊','Matter','Anything that has <b>mass</b> and takes up <b>space</b> (volume). States: <b>solid, liquid, gas</b>.'],
+  ['✂️','Physical Change','The substance changes form, but <b>no new substance</b> is made. Examples: melting, freezing, cutting, dissolving.'],
+  ['💥','Chemical Change','<b>New substances</b> are formed. Examples: burning, rusting, cooking, rotting.'],
+  ['🔎','Signs of a Chemical Change','Colour change 🎨, gas bubbles 🫧, light or heat 🔥, a new smell 👃, a solid (precipitate) forms.'],
+  ['⚛️','The Atom','The smallest particle of an element. A tiny <b>nucleus</b> (protons + neutrons) with <b>electrons</b> moving around it.'],
+  ['➕','Protons','Charge <b>+1</b>, found in the nucleus, mass ≈ 1. The number of protons decides <b>which element</b> it is.'],
+  ['⚪','Neutrons','Charge <b>0</b> (neutral), found in the nucleus, mass ≈ 1.'],
+  ['➖','Electrons','Charge <b>−1</b>, move around the nucleus, almost no mass.'],
+  ['🔢','Atomic Number (Z)','<b>Z = number of protons</b>. In a neutral atom it is also the number of electrons.'],
+  ['⚖️','Mass Number (A)','<b>A = protons + neutrons</b>.<br>So: <b>neutrons = A − Z</b>.'],
+  ['🏷️','Reading the Symbol','In <b>²³₁₁Na</b>: top number = A (23), bottom number = Z (11).<br>Na has 11 p, 12 n, 11 e.'],
+  ['😐','Neutral Atom','<b>Protons = electrons</b>, so the charges cancel: total charge = 0.'],
+  ['⚡','Ions','Atoms that gained or lost electrons.<br><b>Cation (+)</b>: lost electrons.<br><b>Anion (−)</b>: gained electrons.<br><b>Electrons = Z − charge</b>.'],
+  ['👯','Isotopes','Same element (<b>same protons</b>), <b>different neutrons</b>. Example: ¹²C and ¹⁴C.'],
+  ['🎯','Isobars','<b>Same mass number</b>, different atomic number. Example: ¹⁴C and ¹⁴N.'],
+  ['🤝','Isotones','<b>Same number of neutrons</b>, different elements. Example: ¹³C and ¹⁴N (both have 7 neutrons).'],
+  ['🧠','Memory Trick','Isoto<b>P</b>es → same <b>P</b>rotons<br>Isoto<b>N</b>es → same <b>N</b>eutrons<br>Isob<b>A</b>rs → same <b>A</b> (mass number)']
+ ],
+ quiz:[
+  ['What is matter?',['Anything that has mass and takes up space','Only solids','Only things you can see','Light and sound'],''],
+  ['Which is a PHYSICAL change?',['Ice melting','Wood burning','Iron rusting','Baking a cake'],'No new substance is made when ice melts.'],
+  ['Which is a CHEMICAL change?',['Iron rusting','Cutting paper','Dissolving salt','Boiling water'],'Rust is a new substance.'],
+  ['Which is a sign of a chemical change?',['Gas bubbles and a new smell','A change of shape','A change of size','Being cut in half'],''],
+  ['Where are protons and neutrons found?',['In the nucleus','Moving around the nucleus','Outside the atom','In the electron shells'],''],
+  ['What is the charge of an electron?',['Negative (−1)','Positive (+1)','Neutral (0)','+2'],''],
+  ['The atomic number tells you the number of…',['Protons','Neutrons','Protons + neutrons','Electrons in an ion'],''],
+  ['The mass number is…',['Protons + neutrons','Protons + electrons','Neutrons only','Electrons only'],''],
+  ['An atom has mass number 23 and atomic number 11. How many neutrons?',['12','11','23','34'],'n = A − Z = 23 − 11 = 12'],
+  ['Carbon-12 and carbon-14 are…',['Isotopes','Isobars','Isotones','Ions'],'Same element (6 protons), different neutrons.'],
+  ['Atoms with the same mass number but different atomic numbers are…',['Isobars','Isotopes','Isotones','Ions'],''],
+  ['¹³C and ¹⁴N both have 7 neutrons. They are…',['Isotones','Isotopes','Isobars','Identical atoms'],''],
+  ['An atom that LOSES electrons becomes a…',['Positive ion (cation)','Negative ion (anion)','New isotope','Neutral atom'],'Fewer negative charges → overall positive.'],
+  ['Cl⁻ has 17 protons. How many electrons does it have?',['18','17','16','35'],'e = Z − charge = 17 − (−1) = 18'],
+  ['In a neutral atom…',['Protons = electrons','Protons = neutrons','Neutrons = electrons','There are no electrons'],''],
+  ['Mg²⁺ has atomic number 12. How many electrons?',['10','12','14','24'],'e = 12 − 2 = 10']
+ ],
+ sort:{title:'Physical or chemical change?',bins:['Physical change','Chemical change'],items:[
+  ['Melting ice',0],['Cutting paper',0],['Dissolving sugar in water',0],['Boiling water',0],['Crushing a can',0],['Freezing juice',0],['Breaking glass',0],['Tearing cloth',0],
+  ['Burning wood',1],['Iron rusting',1],['Baking a cake',1],['A banana rotting',1],['Fireworks exploding',1],['Digesting food',1],['Milk turning sour',1],['Vinegar + baking soda bubbling',1]]},
+ match:[
+  ['Proton','Positive particle in the nucleus'],['Neutron','Neutral particle in the nucleus'],['Electron','Negative particle around the nucleus'],
+  ['Atomic number (Z)','Number of protons'],['Mass number (A)','Protons + neutrons'],['Isotopes','Same protons, different neutrons'],
+  ['Isobars','Same mass number, different atomic number'],['Isotones','Same number of neutrons'],['Cation','Positive ion (lost electrons)'],['Anion','Negative ion (gained electrons)']]
+},
+{id:'phys',name:'Physics: Energy & Machines',short:'Energy',emoji:'⚡',color:'#f39c12',
+ blurb:'Kinetic and potential energy, work, energy transformations, machines and efficiency.',calc:'phys',
+ cards:[
+  ['🔋','Energy','The ability to do <b>work</b> or cause change. Measured in <b>joules (J)</b>.'],
+  ['🏃','Kinetic Energy','Energy of <b>movement</b>.<br><b>KE = ½ × m × v²</b><br>(m in kg, v in m/s). Faster = much more KE!'],
+  ['⛰️','Potential Energy','<b>Stored</b> energy due to height.<br><b>PE = m × g × h</b><br>On Earth we use g = 10 N/kg.'],
+  ['🌈','Forms of Energy','Chemical, thermal (heat), electrical, light, sound, elastic, nuclear, kinetic and potential.'],
+  ['♻️','Conservation of Energy','Energy is <b>never created or destroyed</b> – it only <b>transforms</b> from one form to another.'],
+  ['💪','Work','Work is done when a <b>force moves</b> an object.<br><b>W = F × d</b> (N × m = J).<br>No movement = no work!'],
+  ['🌊','Hydroelectric Plant','Water high in a dam (<b>potential</b>) falls (<b>kinetic</b>), spins a turbine and generator → <b>electrical</b> energy.'],
+  ['🚗','Car Engine','Fuel (<b>chemical</b>) burns → <b>thermal</b> → moving pistons and wheels (<b>kinetic</b>). Some energy is wasted as heat and sound.'],
+  ['⚙️','Machines','Make work <b>easier</b> by changing the size or direction of a force.<br>Simple machines: lever, pulley, wheel & axle, inclined plane, wedge, screw.'],
+  ['📥','Input & Output','<b>Input</b> = energy or work you put in.<br><b>Output</b> = useful energy or work you get out.<br>Output is always less than input.'],
+  ['📈','Efficiency','<b>Efficiency = useful output ÷ input × 100%</b><br>No machine is 100% efficient because friction wastes energy as heat.']
+ ],
+ quiz:[
+  ['What is the unit of energy?',['Joule (J)','Newton (N)','Metre (m)','Kilogram (kg)'],''],
+  ['Kinetic energy is the energy of…',['Movement','Height','Heat only','Light'],''],
+  ['A book on a high shelf mostly has…',['Gravitational potential energy','Kinetic energy','Sound energy','Electrical energy'],''],
+  ['If an object’s speed doubles, its kinetic energy…',['Becomes 4 times bigger','Doubles','Stays the same','Halves'],'KE depends on v²: 2² = 4.'],
+  ['A 2 kg ball is 5 m high (g = 10 N/kg). Its potential energy is…',['100 J','10 J','50 J','7 J'],'PE = 2 × 10 × 5 = 100 J'],
+  ['A force of 20 N pushes a box 3 m. How much work is done?',['60 J','23 J','6.7 J','17 J'],'W = F × d = 20 × 3 = 60 J'],
+  ['In a hydroelectric plant, the energy changes are…',['Potential → kinetic → electrical','Electrical → kinetic → potential','Chemical → light → sound','Thermal → nuclear → kinetic'],''],
+  ['In a car engine, the chemical energy of fuel turns mainly into…',['Thermal and kinetic energy','Nuclear energy','Potential energy only','Elastic energy'],''],
+  ['The law of conservation of energy says that energy…',['Cannot be created or destroyed, only transformed','Is used up and disappears','Can be created by machines','Only exists in moving objects'],''],
+  ['A machine makes work easier by…',['Changing the size or direction of a force','Creating extra energy','Removing all friction','Making objects lighter'],''],
+  ['A machine has 500 J input and 400 J useful output. Its efficiency is…',['80%','125%','40%','100%'],'400 ÷ 500 × 100 = 80%'],
+  ['Why can no machine be 100% efficient?',['Some energy is wasted as heat and sound (friction)','Machines create extra energy','Energy disappears','Machines are too heavy'],''],
+  ['Which of these is a simple machine?',['Lever','Battery','Light bulb','Thermometer'],''],
+  ['Work is done when…',['A force moves an object a distance','You hold a heavy box still','You think very hard','An object stays still'],''],
+  ['A solar panel changes…',['Light → electrical energy','Electrical → light energy','Chemical → sound energy','Kinetic → chemical energy'],'']
+ ],
+ sort:{title:'Kinetic or potential energy?',bins:['Kinetic ⚡ (moving)','Potential 🔋 (stored)'],items:[
+  ['A running cheetah',0],['A flying arrow',0],['Wind blowing',0],['A rolling ball',0],['A falling apple',0],['A moving car',0],['A flowing river',0],
+  ['A rock on the edge of a cliff',1],['A stretched rubber band',1],['A battery',1],['Food in your lunchbox',1],['Water held behind a dam',1],['A compressed spring',1],['A drawn bow',1]]},
+ match:[
+  ['Hydroelectric plant','Potential → kinetic → electrical'],['Car engine','Chemical → thermal → kinetic'],['Light bulb','Electrical → light + heat'],
+  ['Solar panel','Light → electrical'],['Loudspeaker','Electrical → sound'],['Wind turbine','Kinetic → electrical'],
+  ['Battery torch','Chemical → electrical → light'],['Kinetic energy','½ × m × v²'],['Potential energy','m × g × h'],
+  ['Efficiency','Useful output ÷ input × 100%'],['Work','Force × distance']]
+},
+{id:'life',name:'Living Things & Cell Theory',short:'Life',emoji:'🧬',color:'#e84393',
+ blurb:'4 supplies of life, 8 characteristics of living things, cell theory and its scientists.',calc:null,
+ cards:[
+  ['💧','4 Supplies of Life','Every living thing needs <b>water, air, energy</b> and <b>living space</b>.'],
+  ['🔄','Metabolism','All the <b>chemical reactions</b> that happen inside an organism.'],
+  ['⚡','Use Energy','Living things need energy: plants get it from <b>sunlight</b>, animals from <b>food</b>.'],
+  ['🐣','Reproduction','Living things make <b>offspring</b> – sexually or asexually.'],
+  ['🌡️','Homeostasis','Keeping <b>internal conditions stable</b>, like body temperature (sweating, shivering).'],
+  ['🌱','Growth & Development','Getting bigger and changing during the life cycle (seed → tree, tadpole → frog).'],
+  ['👀','Respond to Stimuli','Reacting to changes (<b>stimuli</b>) in the environment – a plant bending toward light.'],
+  ['🧬','Contain DNA','DNA holds the <b>genetic instructions</b> that are passed to offspring.'],
+  ['🦎','Adaptation & Evolution','Populations change over many generations to <b>survive better</b> in their environment.'],
+  ['📜','Cell Theory','1️⃣ All living things are made of <b>cells</b>.<br>2️⃣ The cell is the <b>basic unit</b> of structure and function.<br>3️⃣ All cells come from <b>pre-existing cells</b>.'],
+  ['🔭','Janssen (c. 1590)','Hans and Zacharias Janssen built one of the first <b>compound microscopes</b>.'],
+  ['🍾','Robert Hooke (1665)','Looked at thin slices of <b>cork</b> and named the little boxes <b>“cells”</b>.'],
+  ['🦠','Van Leeuwenhoek (1670s)','Made powerful lenses and was the first to see <b>living microorganisms</b> (“animalcules”).'],
+  ['🌿','Schleiden (1838)','Concluded that all <b>plants</b> are made of cells.'],
+  ['🐾','Schwann (1839)','Concluded that all <b>animals</b> are made of cells.'],
+  ['🧫','Virchow (1855)','Stated that all cells come from <b>pre-existing cells</b>.']
+ ],
+ quiz:[
+  ['What are the 4 supplies of life?',['Water, air, energy, living space','Water, food, toys, light','Air, money, soil, rocks','Sun, moon, water, fire'],''],
+  ['Keeping a stable internal environment is called…',['Homeostasis','Metabolism','Adaptation','Reproduction'],''],
+  ['All the chemical reactions in an organism are its…',['Metabolism','Growth','Stimulus','Habitat'],''],
+  ['A plant bending toward the light is an example of…',['Responding to stimuli','Reproduction','Homeostasis','Evolution'],''],
+  ['Why do offspring look like their parents?',['They inherit DNA from them','They use energy','They grow','They respond to stimuli'],''],
+  ['Sweating when you are hot is an example of…',['Homeostasis','Reproduction','Growth','Metabolism only'],'Sweating cools you down to keep your temperature stable.'],
+  ['Populations changing over many generations to survive better is…',['Adaptation and evolution','Metabolism','Homeostasis','Growth'],''],
+  ['Which is NOT a postulate of cell theory?',['Cells can appear from non-living matter','All living things are made of cells','The cell is the basic unit of life','All cells come from pre-existing cells'],''],
+  ['Who first used the word “cell” after looking at cork in 1665?',['Robert Hooke','Rudolf Virchow','Theodor Schwann','Matthias Schleiden'],''],
+  ['Who first saw living microorganisms (“animalcules”)?',['Anton van Leeuwenhoek','Robert Hooke','Rudolf Virchow','Zacharias Janssen'],''],
+  ['Who concluded that all PLANTS are made of cells?',['Matthias Schleiden','Theodor Schwann','Robert Hooke','Rudolf Virchow'],'Schleiden – plants (1838).'],
+  ['Who concluded that all ANIMALS are made of cells?',['Theodor Schwann','Matthias Schleiden','Anton van Leeuwenhoek','Zacharias Janssen'],'Schwann – animals (1839).'],
+  ['“All cells come from pre-existing cells” was stated by…',['Rudolf Virchow','Robert Hooke','Matthias Schleiden','Zacharias Janssen'],''],
+  ['Hans and Zacharias Janssen are known for…',['Building one of the first compound microscopes','Discovering DNA','Naming the cell','Studying animal cells'],''],
+  ['A seed becoming a tree is an example of…',['Growth and development','Homeostasis','A stimulus','Competition'],'']
+ ],
+ sort:{title:'Which supply of life is it?',bins:['💧 Water','🌬️ Air','☀️ Energy','🏡 Living space'],items:[
+  ['Cells are about 70% made of it',0],['Blood uses it to carry nutrients',0],['A cactus stores it in its stem',0],
+  ['Oxygen for cellular respiration',1],['Carbon dioxide for photosynthesis',1],['Gills take in this dissolved gas',1],
+  ['Sunlight for plants',2],['Food for animals',2],['Glucose broken down in cells',2],
+  ['A territory defended by a lion',3],['Room for roots to spread',3],['A burrow to hide from predators',3]]},
+ match:[
+  ['Robert Hooke','Named “cells” after observing cork'],['Van Leeuwenhoek','First to see living microorganisms'],
+  ['Schleiden','All plants are made of cells'],['Schwann','All animals are made of cells'],
+  ['Virchow','All cells come from pre-existing cells'],['Janssen','Built an early compound microscope'],
+  ['Metabolism','All chemical reactions in an organism'],['Homeostasis','Keeping internal conditions stable'],
+  ['Stimulus','A change an organism responds to'],['DNA','Genetic instructions passed to offspring']]
+},
+{id:'cells',name:'Cells & Organelles',short:'Cells',emoji:'🦠',color:'#0984e3',
+ blurb:'Prokaryotes and eukaryotes, organelles and their functions, plant vs animal cells.',calc:null,
+ cards:[
+  ['🦠','Prokaryotes','<b>No nucleus</b> – DNA floats in the cytoplasm. Small and simple, no membrane-bound organelles. Example: <b>bacteria</b>.'],
+  ['🏠','Eukaryotes','Have a <b>nucleus</b> and membrane-bound organelles. Bigger. Examples: animals, plants, fungi, protists.'],
+  ['🤝','Both Have…','<b>Cell membrane, cytoplasm, ribosomes</b> and <b>DNA</b>.'],
+  ['🧠','Nucleus','The <b>control centre</b>; contains the <b>DNA</b>.'],
+  ['🧱','Cell Membrane','Thin layer that controls what <b>enters and leaves</b> the cell.'],
+  ['🛡️','Cell Wall','Rigid layer outside the membrane that <b>supports and protects</b>. Found in plants, fungi and bacteria.'],
+  ['🫙','Cytoplasm','Jelly-like fluid where most <b>chemical reactions</b> happen.'],
+  ['🔋','Mitochondria','The “powerhouse”: releases <b>energy</b> from food by <b>respiration</b>.'],
+  ['☀️','Chloroplasts','Contain green chlorophyll and do <b>photosynthesis</b>. Only in plants and algae.'],
+  ['🏭','Ribosomes','Tiny factories that make <b>proteins</b>.'],
+  ['💧','Vacuole','Stores water and substances. Plants have one <b>large central vacuole</b> that keeps the cell firm.'],
+  ['🛣️','Endoplasmic Reticulum','A network of membranes that <b>transports</b> materials (rough ER has ribosomes on it).'],
+  ['📦','Golgi Apparatus','<b>Packages</b> and ships proteins – the cell’s post office.'],
+  ['🗑️','Lysosomes','Contain enzymes that <b>digest</b> waste and worn-out parts (mainly in animal cells).'],
+  ['🌿','Plant vs Animal','Plant cells have a <b>cell wall</b>, <b>chloroplasts</b> and a <b>large vacuole</b>. Animal cells don’t.']
+ ],
+ quiz:[
+  ['Prokaryotic cells do NOT have…',['A nucleus','Ribosomes','A cell membrane','Cytoplasm'],''],
+  ['Which is an example of a prokaryote?',['Bacteria','A mushroom','A human skin cell','An oak tree'],''],
+  ['Eukaryotic cells have…',['A nucleus and membrane-bound organelles','No DNA','No membrane','Only ribosomes'],''],
+  ['Which organelle releases energy by respiration?',['Mitochondria','Chloroplast','Vacuole','Cell wall'],''],
+  ['Photosynthesis happens in the…',['Chloroplasts','Mitochondria','Nucleus','Ribosomes'],''],
+  ['Which organelle controls the cell and contains DNA?',['Nucleus','Cytoplasm','Vacuole','Cell membrane'],''],
+  ['What controls what enters and leaves the cell?',['Cell membrane','Cell wall','Nucleus','Chloroplast'],''],
+  ['Which are found in plant cells but NOT in animal cells?',['Cell wall and chloroplasts','Nucleus','Mitochondria','Cell membrane'],''],
+  ['Proteins are made by the…',['Ribosomes','Vacuole','Cell wall','Lysosomes'],''],
+  ['The jelly-like fluid where reactions happen is the…',['Cytoplasm','Nucleus','Vacuole','Golgi apparatus'],''],
+  ['What does the large central vacuole do?',['Stores water and keeps the plant cell firm','Makes proteins','Does photosynthesis','Controls the cell'],''],
+  ['Generally, which cells are larger?',['Eukaryotic cells','Prokaryotic cells','They are always the same size','It depends on their colour'],''],
+  ['The Golgi apparatus…',['Packages and transports proteins','Stores DNA','Captures sunlight','Digests waste'],''],
+  ['Lysosomes…',['Digest waste and old cell parts','Make glucose','Store water','Control the cell'],''],
+  ['Both prokaryotes and eukaryotes have…',['Cell membrane, ribosomes, cytoplasm and DNA','A nucleus','Mitochondria','Chloroplasts'],'']
+ ],
+ sort:{title:'Prokaryote, eukaryote or both?',bins:['Prokaryote','Eukaryote','Both'],items:[
+  ['No nucleus',0],['DNA floats in the cytoplasm',0],['Bacteria',0],['Very small and simple',0],
+  ['Has a nucleus',1],['Has mitochondria',1],['Animals, plants and fungi',1],['Membrane-bound organelles',1],
+  ['Cell membrane',2],['Ribosomes',2],['Cytoplasm',2],['Contains DNA',2]]},
+ match:[
+  ['Nucleus','Control centre that contains DNA'],['Mitochondria','Releases energy (respiration)'],['Chloroplast','Photosynthesis'],
+  ['Cell membrane','Controls what enters and leaves'],['Cell wall','Supports and protects plant cells'],['Ribosome','Makes proteins'],
+  ['Vacuole','Stores water and substances'],['Cytoplasm','Jelly where reactions happen'],['Golgi apparatus','Packages and ships proteins'],
+  ['Lysosome','Digests waste'],['Endoplasmic reticulum','Transport network inside the cell']]
+},
+{id:'eco',name:'Ecology & Biomes',short:'Ecology',emoji:'🌍',color:'#27ae60',
+ blurb:'Biotic and abiotic factors, predation, herbivory, mutualism, parasitism, competition and biomes.',calc:null,
+ cards:[
+  ['🌍','Ecology','The study of how organisms <b>interact</b> with each other and with their environment.'],
+  ['🐸','Biotic Factors','<b>Living</b> (or once-living) parts: plants, animals, fungi, bacteria, dead leaves.'],
+  ['🪨','Abiotic Factors','<b>Non-living</b> parts: sunlight, temperature, water, soil, rocks, wind, pH.'],
+  ['🦁','Predation (+/−)','A <b>predator</b> hunts and eats its <b>prey</b>. Lion and zebra.'],
+  ['🐄','Herbivory (+/−)','An animal eats <b>plants</b>. Cow and grass.'],
+  ['🐝','Mutualism (+/+)','<b>Both</b> species benefit. Bees get nectar; flowers get pollinated.'],
+  ['🦟','Parasitism (+/−)','A <b>parasite</b> lives on or in a <b>host</b> and harms it, usually without killing it quickly. Ticks, tapeworms.'],
+  ['🥊','Competition (−/−)','Organisms struggle for the <b>same limited resource</b> (food, light, space, mates).'],
+  ['🌳','Tropical Rainforest','Hot and wet all year, <b>highest biodiversity</b>. Example: the Amazon 🇵🇪.'],
+  ['🏜️','Desert','Very little rain (less than 250 mm per year). Cacti, lizards, camels. Example: the Sechura Desert.'],
+  ['❄️','Tundra','Very cold, frozen ground (<b>permafrost</b>), no trees; mosses, lichens, caribou.'],
+  ['🌲','Taiga','<b>Coniferous</b> forest with long snowy winters; pines, moose, wolves.'],
+  ['🍂','Temperate Forest','Four seasons; <b>deciduous</b> trees lose their leaves in autumn.'],
+  ['🦓','Grassland & Savanna','Grasses with few trees; the savanna has wet and dry seasons – zebras, lions.'],
+  ['🐠','Aquatic Biomes','<b>Freshwater</b> (rivers, lakes) and <b>marine</b> (oceans, coral reefs).']
+ ],
+ quiz:[
+  ['Ecology is the study of…',['Interactions between organisms and their environment','Only rocks','Only cells','Stars and planets'],''],
+  ['Which is an ABIOTIC factor?',['Temperature','Grass','Bacteria','A mushroom'],''],
+  ['Which is a BIOTIC factor?',['A fungus on a log','Sunlight','Water','Soil pH'],''],
+  ['A lion hunting a zebra is an example of…',['Predation','Mutualism','Herbivory','Competition'],''],
+  ['A deer eating leaves is an example of…',['Herbivory','Parasitism','Mutualism','Competition'],''],
+  ['Bees and flowers are an example of…',['Mutualism','Parasitism','Competition','Predation'],'Both benefit (+/+).'],
+  ['A tick feeding on a dog is an example of…',['Parasitism','Mutualism','Herbivory','Competition'],''],
+  ['Two trees growing tall to get the same sunlight is…',['Competition','Mutualism','Predation','Parasitism'],''],
+  ['In mutualism…',['Both species benefit','One benefits and one is harmed','Both are harmed','Neither is affected'],''],
+  ['In parasitism, the host is usually…',['Harmed but not killed quickly','Helped','Eaten immediately','Not affected'],''],
+  ['Very cold biome with permafrost and no trees:',['Tundra','Tropical rainforest','Desert','Savanna'],''],
+  ['Hot, very rainy biome with the highest biodiversity:',['Tropical rainforest','Tundra','Desert','Taiga'],''],
+  ['Coniferous forest with long, cold, snowy winters:',['Taiga','Savanna','Desert','Tropical rainforest'],''],
+  ['Very little rain and plants like cacti:',['Desert','Tundra','Taiga','Temperate forest'],''],
+  ['Grassland with scattered trees and wet/dry seasons:',['Savanna','Taiga','Tundra','Temperate deciduous forest'],''],
+  ['Trees that lose their leaves in autumn, four seasons:',['Temperate deciduous forest','Taiga','Desert','Tundra'],'']
+ ],
+ sort:{title:'Biotic or abiotic?',bins:['Biotic 🐸 (living)','Abiotic 🪨 (non-living)'],items:[
+  ['Grass',0],['Bacteria in the soil',0],['Mushrooms',0],['An eagle',0],['Fallen leaves',0],['Algae',0],['Earthworms',0],
+  ['Sunlight',1],['Temperature',1],['Rocks',1],['Water',1],['Wind',1],['Soil pH',1],['Humidity',1]]},
+ match:[
+  ['Predation','An owl catches a mouse'],['Herbivory','A rabbit eats lettuce'],['Mutualism','Clownfish and sea anemone help each other'],
+  ['Parasitism','A tapeworm living in an intestine'],['Competition','Two lions fighting over the same prey'],
+  ['Tundra','Frozen ground (permafrost), no trees'],['Desert','Less than 250 mm of rain per year'],['Tropical rainforest','Hot, wet, highest biodiversity'],
+  ['Taiga','Coniferous forest with snowy winters'],['Savanna','Grassland with scattered trees'],['Temperate forest','Trees lose leaves in autumn']]
+}
+];
+
+const UN = Object.fromEntries(UNITS.map(u=>[u.id,u]));
+const AVATARS=['🧪','🔬','🧬','⚛️','🦠','🌍','🚀','🦊','🐸','🦉','🐬','🦖','🌵','⚡','🌋','🤖'];
+const RANKS=['Lab Rookie','Curious Cell','Bunsen Buddy','Atom Apprentice','Energy Explorer','Cell Detective','Ecosystem Expert','Science Star','Lab Legend','Einstein Jr.'];
+const BINC=['#6c5ce7','#00b894','#e17055','#0984e3'];
+const XP_PER_LEVEL=150;
+
+/* ---------- state ---------- */
+const KEY='sciquest7_agurto_v1';
+const $=s=>document.querySelector(s);
+const app=$('#app');
+function blank(){return {name:'',avatar:'🧪',xp:0,badges:{},units:{},cardsSeen:0,chemCalc:0,physCalc:0,bestStreak:0,lightBest:0,matches:0,quizzes:0,acts:0,perfect:false,perfectSort:false,fastMatch:false,days:[],mute:false}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&typeof d==='object')return Object.assign(blank(),d)}catch(e){}return blank()}
+let S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function U(id){if(!S.units[id])S.units[id]={seen:[],best:0,sort:false,match:false,calc:0};return S.units[id]}
+const today=new Date().toISOString().slice(0,10);
+if(!S.days.includes(today)){S.days.push(today);save()}
+
+/* ---------- helpers ---------- */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const level=()=>Math.floor(S.xp/XP_PER_LEVEL)+1;
+const rankTitle=()=>RANKS[Math.min(level()-1,RANKS.length-1)];
+function unitStars(u){const p=U(u.id);const c=[p.seen.length>=u.cards.length,p.best>=80,p.sort,p.match];if(u.calc)c.push(p.calc>=5);return {got:c.filter(Boolean).length,total:c.length}}
+const starStr=st=>'⭐'.repeat(st.got)+'☆'.repeat(st.total-st.got);
+
+/* ---------- sound & fx ---------- */
+let AC=null;
+function tone(f,d=.12,type='sine',delay=0){if(S.mute)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+delay,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.14,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+const sfx={good(){tone(660);tone(880,.15,'sine',.09)},bad(){tone(170,.25,'square')},win(){[523,659,784,1047].forEach((f,i)=>tone(f,.2,'triangle',i*.11))},flip(){tone(480,.05,'triangle')}};
+function confetti(n=70){const cols=['#ff6b6b','#feca57','#48dbfb','#1dd1a1','#a29bfe','#ff9ff3'];for(let i=0;i<n;i++){const p=document.createElement('i');p.className='conf';p.style.left=Math.random()*100+'vw';p.style.background=cols[i%6];p.style.setProperty('--dx',(Math.random()*240-120)+'px');p.style.animationDuration=(1.6+Math.random()*1.6)+'s';p.style.animationDelay=(Math.random()*.3)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),3800)}}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.innerHTML=msg;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),1700)}
+const POPQ=[];let popOpen=false;
+function popup(html,btn='Awesome! 🎉'){POPQ.push([html,btn]);if(!popOpen)nextPop()}
+function nextPop(){const h=POPQ.shift();if(!h){popOpen=false;return}popOpen=true;const o=document.createElement('div');o.className='overlay';o.innerHTML=`<div class="popcard pop-in">${h[0]}<button class="btn">${h[1]}</button></div>`;o.onclick=()=>{o.remove();nextPop()};document.body.appendChild(o)}
+function toggleMute(){S.mute=!S.mute;save();const b=$('#mutebtn');if(b)b.textContent=S.mute?'🔇':'🔊'}
+
+function addXP(n){const before=level();S.xp+=n;save();toast(`+${n} XP ✨`);const c=$('#xpchip');if(c)c.textContent=`Lv ${level()} · ${S.xp} XP`;
+ if(level()>before){sfx.win();confetti();popup(`<div class="bigemoji spin">🆙</div><h2>LEVEL UP!</h2><h3>Level ${level()}</h3><p>You are now a <b>${rankTitle()}</b>!</p>`,'Let’s go! 🚀')}
+ checkBadges()}
+
+/* ---------- badges ---------- */
+const BADGES=[
+ ['first','🚀','Blast Off','Complete your first activity',()=>S.acts>=1],
+ ['cards20','🃏','Card Shark','Flip 20 learning cards',()=>S.cardsSeen>=20],
+ ['allcards','📚','Bookworm','Learn every card in every unit',()=>UNITS.every(u=>U(u.id).seen.length>=u.cards.length)],
+ ['quiz1','❓','Quiz Rookie','Finish your first quiz',()=>S.quizzes>=1],
+ ['perfect','💯','Perfectionist','Score 100% in a quiz',()=>S.perfect],
+ ['fire5','🔥','On Fire','5 correct answers in a row',()=>S.bestStreak>=5],
+ ['fire10','☄️','Unstoppable','10 correct answers in a row',()=>S.bestStreak>=10],
+ ['sorter','🗂️','Super Sorter','Finish a sort game with 0 mistakes',()=>S.perfectSort],
+ ['match3','🧩','Matchmaker','Complete 3 match games',()=>S.matches>=3],
+ ['speedy','⏱️','Speed Matcher','Finish a match game in under 25 seconds',()=>S.fastMatch],
+ ['atom','⚛️','Atom Ace','Solve 10 atom calculations',()=>S.chemCalc>=10],
+ ['energy','🔋','Energy Ace','Solve 10 energy calculations',()=>S.physCalc>=10],
+ ['light10','🌩️','Lightning Brain','Score 10+ in a Lightning Round',()=>S.lightBest>=10],
+ ['days3','📅','Regular Scientist','Practise on 3 different days',()=>S.days.length>=3],
+ ['lv5','🌟','Rising Star','Reach Level 5',()=>level()>=5],
+ ...UNITS.map(u=>['m_'+u.id,u.emoji,u.short+' Master','Score 80%+ in the '+u.name+' quiz',()=>U(u.id).best>=80]),
+ ['legend','👑','Science Legend','Master all 6 units',()=>UNITS.every(u=>U(u.id).best>=80)]
+];
+function checkBadges(){let any=false;BADGES.forEach(([id,e,n,d,t])=>{if(!S.badges[id]&&t()){S.badges[id]=Date.now();any=true;popup(`<div class="bigemoji spin">${e}</div><h2>New badge!</h2><h3>${n}</h3><p>${d}</p>`)}});if(any){save();sfx.win();confetti(90);const b=$('#badgechip');if(b)b.textContent='🏅 '+Object.keys(S.badges).length}}
+
+/* ---------- router ---------- */
+let TIMERS=[],AFTER=[];
+const later=f=>AFTER.push(f);
+function go(name,...args){TIMERS.forEach(clearInterval);TIMERS=[];AFTER=[];app.innerHTML=SCREENS[name](...args);app.classList.remove('enter');void app.offsetWidth;app.classList.add('enter');window.scrollTo(0,0);const a=AFTER;AFTER=[];a.forEach(f=>f())}
+function nav(title){return `<nav class="topnav"><button class="navbtn" title="Home" onclick="go('home')">🏠</button><div class="navtitle">${title}</div><button class="chip" id="badgechip" onclick="go('badges')">🏅 ${Object.keys(S.badges).length}</button><span class="chip lvl" id="xpchip">Lv ${level()} · ${S.xp} XP</span><button class="navbtn" id="mutebtn" title="Sound" onclick="toggleMute()">${S.mute?'🔇':'🔊'}</button></nav>`}
+
+const SCREENS={};
+
+/* ---------- welcome & profile ---------- */
+SCREENS.welcome=()=>`<div class="panel center"><div class="bigemoji bounce">🔬</div><h1 class="title" style="font-size:38px">Science Quest 7</h1><p style="font-size:18px">Your Grade 7 science adventure!<br>Learn ⚡ Play ⚡ Earn badges ⚡ Level up</p>
+<label class="lbl">What’s your name?</label><input id="nm" class="inp" maxlength="24" placeholder="Type your name" value="${esc(S.name)}">
+<label class="lbl">Choose your avatar</label><div class="avatars">${AVATARS.map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
+<div class="row" style="margin-top:20px"><button class="btn big green" onclick="startGame()">Start my quest 🚀</button></div>
+<p><small>Already played on another device? Go to ⚙️ Profile later to load your save code.</small></p></div>`;
+function pickAv(el,a){S.avatar=a;document.querySelectorAll('.av').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');sfx.flip()}
+function startGame(){const i=$('#nm'),n=i.value.trim();if(!n){i.classList.remove('shake');void i.offsetWidth;i.classList.add('shake');i.focus();return}S.name=n;save();sfx.win();go('home')}
+
+SCREENS.profile=()=>nav('⚙️ Profile')+`<div class="panel center"><label class="lbl">Your name</label><input id="nm" class="inp" maxlength="24" value="${esc(S.name)}">
+<label class="lbl">Your avatar</label><div class="avatars">${AVATARS.map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
+<div class="row"><button class="btn green" onclick="saveProfile()">💾 Save</button></div></div>
+<div class="panel"><h3>📲 Move your progress to another device</h3><p>Your progress is saved automatically in <b>this browser</b>. To continue on another computer or phone, copy this code and paste it there.</p>
+<textarea id="exp" readonly onclick="this.select()">${exportCode()}</textarea><div class="row"><button class="btn alt" onclick="copyCode()">📋 Copy code</button></div>
+<h3>📥 Load a save code</h3><textarea id="imp" placeholder="Paste your code here"></textarea><div class="row"><button class="btn" onclick="importCode()">Load progress</button></div></div>
+<div class="panel center"><button class="btn alt" style="color:#d63031" onclick="resetAll()">🗑️ Reset all progress</button></div>`;
+function saveProfile(){const n=$('#nm').value.trim();if(n)S.name=n;save();toast('Saved! ✅');go('home')}
+function exportCode(){try{return btoa(unescape(encodeURIComponent(JSON.stringify(S))))}catch(e){return ''}}
+function copyCode(){const t=$('#exp');t.select();try{navigator.clipboard.writeText(t.value).then(()=>toast('Copied! 📋'),()=>{document.execCommand('copy');toast('Copied! 📋')})}catch(e){document.execCommand('copy');toast('Copied! 📋')}}
+function importCode(){try{const d=JSON.parse(decodeURIComponent(escape(atob($('#imp').value.trim()))));if(typeof d.xp!=='number')throw 0;S=Object.assign(blank(),d);if(!S.days.includes(today))S.days.push(today);save();sfx.win();popup('<div class="bigemoji">✅</div><h2>Progress loaded!</h2><p>Welcome back, '+esc(S.name)+'!</p>');go('home')}catch(e){sfx.bad();toast('That code doesn’t work 😕')}}
+function resetAll(){if(confirm('Delete ALL your progress, XP and badges? This cannot be undone.')){localStorage.removeItem(KEY);S=blank();S.days=[today];save();go('welcome')}}
+
+/* ---------- home ---------- */
+SCREENS.home=()=>{if(!S.name)return SCREENS.welcome();const into=S.xp%XP_PER_LEVEL;
+ return nav('Science Quest 7')+`<section class="hero"><div class="avatar big">${S.avatar}</div><div style="flex:1"><h1>Hi, ${esc(S.name)}!</h1><div class="rank">Level ${level()} · ${rankTitle()}</div><div class="xpbar"><div style="width:${into/XP_PER_LEVEL*100}%"></div></div><small>${into}/${XP_PER_LEVEL} XP to Level ${level()+1}</small></div></section>
+ <button class="lightning" onclick="go('lightning')">⚡ Lightning Round ⚡<small>60 seconds · all topics · beat your record (${S.lightBest})</small></button>
+ <div class="grid">${UNITS.map(u=>{const st=unitStars(u);return `<button class="utile" style="background:${u.color}" onclick="go('unit','${u.id}')"><span class="ue">${u.emoji}</span><h3>${u.name}</h3><div class="stars">${starStr(st)}</div><div class="ubar"><div style="width:${st.got/st.total*100}%"></div></div></button>`}).join('')}</div>
+ <div class="row" style="margin-top:16px"><button class="btn alt" onclick="go('badges')">🏅 Badges</button><button class="btn alt" onclick="go('report')">📋 My Report</button><button class="btn alt" onclick="go('profile')">⚙️ Profile</button></div>`};
+
+/* ---------- unit ---------- */
+SCREENS.unit=id=>{const u=UN[id],p=U(id),st=unitStars(u);
+ const t=[['📖','Learn',`${p.seen.length}/${u.cards.length} cards`,`go('learn','${id}',0)`,p.seen.length>=u.cards.length],
+  ['❓','Quiz',p.best?`Best: ${p.best}%`:'8 questions',`startQuiz('${id}')`,p.best>=80],
+  ['🗂️','Sort it!',p.sort?'Perfect sort ✔':u.sort.title,`startSort('${id}')`,p.sort],
+  ['🧩','Match',p.match?'Completed ✔':'Pair them up!',`startMatch('${id}')`,p.match]];
+ if(u.calc)t.push(['🧮','Calc Lab',`${p.calc} solved (5 for ⭐)`,`startCalc('${id}')`,p.calc>=5]);
+ return nav(u.emoji+' '+u.short)+`<div class="unithero" style="background:${u.color}"><div class="bigemoji bounce">${u.emoji}</div><div><h1>${u.name}</h1><div class="stars">${starStr(st)}</div><small>${u.blurb}</small></div></div>
+ <div class="acts">${t.map(a=>`<button class="act ${a[4]?'done':''}" onclick="${a[3]}"><span class="ae">${a[0]}</span><b>${a[1]}</b><small>${a[2]}</small>${a[4]?'<span class="tick">⭐</span>':''}</button>`).join('')}</div>
+ <p style="color:#fff;text-align:center;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.25)">Tip: start with 📖 Learn, then test yourself!</p>`};
+
+/* ---------- learn ---------- */
+SCREENS.learn=(id,i)=>{const u=UN[id],c=u.cards[i],p=U(id),n=u.cards.length;
+ later(()=>{document.onkeydown=e=>{if(!$('#fc'))return;if(e.key==='ArrowRight'&&i<n-1)go('learn',id,i+1);if(e.key==='ArrowLeft'&&i>0)go('learn',id,i-1);if(e.key===' '){e.preventDefault();flipCard(id,i)}}});
+ return nav(u.emoji+' Learn')+`<div class="counter">Card ${i+1} of ${n} · tap the card to flip it!</div>
+ <div class="card3d" id="fc" onclick="flipCard('${id}',${i})"><div class="inner"><div class="face front" style="background:${u.color}"><div class="cemoji">${c[0]}</div><h2>${c[1]}</h2><small>👆 Tap to flip</small></div><div class="face back"><h3>${c[0]} ${c[1]}</h3><div>${c[2]}</div></div></div></div>
+ <div class="dots">${u.cards.map((_,k)=>`<span class="dot ${k===i?'cur':''} ${p.seen.includes(k)?'seen':''}"></span>`).join('')}</div>
+ <div class="row"><button class="btn alt" ${i===0?'disabled':''} onclick="go('learn','${id}',${i-1})">⬅ Back</button>${i<n-1?`<button class="btn" onclick="go('learn','${id}',${i+1})">Next ➡</button>`:`<button class="btn green" onclick="go('unit','${id}')">Done ✅</button>`}</div>`};
+function flipCard(id,i){const el=$('#fc');el.classList.toggle('flipped');sfx.flip();const u=UN[id],p=U(id);
+ if(!p.seen.includes(i)){p.seen.push(i);S.cardsSeen++;addXP(2);if(p.seen.length===u.cards.length){S.acts++;save();sfx.win();confetti();popup(`<div class="bigemoji">📖⭐</div><h2>Unit cards learned!</h2><p>You flipped every card in <b>${u.short}</b>. Now try the quiz!</p>`,'Let’s go!');checkBadges()}}}
+
+/* ---------- quiz ---------- */
+let Q=null;
+function prep(q){return {q:q[0],e:q[2]||'',opts:shuffle(q[1].map((t,k)=>({t,ok:k===0})))}}
+function startQuiz(id){Q={id,qs:shuffle(UN[id].quiz).slice(0,8).map(prep),i:0,score:0,streak:0,lock:false};go('quiz')}
+SCREENS.quiz=()=>{const u=UN[Q.id],q=Q.qs[Q.i];
+ return nav(u.emoji+' Quiz')+`<div class="panel"><div class="qhead"><span>Question ${Q.i+1}/${Q.qs.length}</span><span class="streak ${Q.streak>=3?'hot':''}">🔥 ${Q.streak}</span><span>✅ ${Q.score}</span></div><div class="prog"><div style="width:${Q.i/Q.qs.length*100}%"></div></div>
+ <h2 class="q">${q.q}</h2><div class="opts">${q.opts.map((o,k)=>`<button class="opt" onclick="qAns(${k})">${'ABCD'[k]}. ${o.t}</button>`).join('')}</div><div id="fb"></div></div>`};
+function qAns(k){if(Q.lock)return;Q.lock=true;const q=Q.qs[Q.i],btns=document.querySelectorAll('.opt'),ok=q.opts[k].ok;
+ btns.forEach((b,j)=>{b.disabled=true;if(q.opts[j].ok)b.classList.add('right')});
+ if(ok){Q.score++;Q.streak++;S.bestStreak=Math.max(S.bestStreak,Q.streak);sfx.good();addXP(10);if(Q.streak===3||Q.streak===5||Q.streak===8)toast(`🔥 ${Q.streak} in a row!`)}
+ else{btns[k].classList.add('wrong');Q.streak=0;sfx.bad()}
+ const praise=pick(['Awesome!','Nailed it!','Brilliant!','You rock!','Correct!','Science star!','Genius!']);
+ const right=q.opts.find(o=>o.ok).t;
+ $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'🎉 '+praise:'😅 Not quite! The answer is: '+right}${q.e?`<p>💡 ${q.e}</p>`:''}<div><button class="btn" onclick="qNext()">${Q.i<Q.qs.length-1?'Next ➡':'See results 🏁'}</button></div></div>`;
+ save()}
+function qNext(){Q.i++;Q.lock=false;if(Q.i>=Q.qs.length)quizEnd();else go('quiz')}
+function quizEnd(){const pct=Math.round(Q.score/Q.qs.length*100),p=U(Q.id),wasBest=p.best;p.best=Math.max(p.best,pct);S.quizzes++;S.acts++;if(pct===100)S.perfect=true;save();
+ if(pct>=80){addXP(20);confetti();sfx.win()}else checkBadges();go('quizend',pct,pct>wasBest&&wasBest>0)}
+SCREENS.quizend=(pct,record)=>{const u=UN[Q.id];const s=pct>=90?3:pct>=70?2:pct>=50?1:0;
+ const face=pct===100?'🏆':pct>=80?'🤩':pct>=60?'🙂':'💪';
+ const msg=pct===100?'PERFECT SCORE!':pct>=80?'Unit mastered! ⭐':pct>=60?'Good job – you’re close!':'Keep practising – you can do it!';
+ return nav(u.emoji+' Results')+`<div class="panel center result"><div class="bigemoji pop-in">${face}</div><h1>${pct}%</h1><div class="big3">${'⭐'.repeat(s)}${'☆'.repeat(3-s)}</div><h2>${msg}</h2><p>You got <b>${Q.score}</b> out of <b>${Q.qs.length}</b> correct.${record?' 🎊 New personal best!':''}</p>${pct<80?'<p>Score <b>80%</b> or more to earn the unit star. Review the 📖 cards and try again!</p>':''}
+ <div class="row"><button class="btn" onclick="startQuiz('${Q.id}')">🔁 Try again</button><button class="btn alt" onclick="go('learn','${Q.id}',0)">📖 Review cards</button><button class="btn green" onclick="go('unit','${Q.id}')">Back to unit</button></div></div>`};
+
+/* ---------- sort ---------- */
+let SO=null;
+function startSort(id){SO={id,items:shuffle(UN[id].sort.items).slice(0,10),i:0,mist:0,lock:false};go('sort')}
+SCREENS.sort=()=>{const u=UN[SO.id],it=SO.items[SO.i];
+ return nav(u.emoji+' Sort it!')+`<div class="panel center"><div class="prog"><div style="width:${SO.i/SO.items.length*100}%"></div></div><small><b>${SO.i+1}</b> / ${SO.items.length} · Mistakes: ${SO.mist}</small><p class="sorttitle">${u.sort.title}</p>
+ <div class="sortitem pop-in" id="si">${it[0]}</div><div class="bins b${u.sort.bins.length===3?3:2}">${u.sort.bins.map((b,k)=>`<button class="bin" style="--c:${BINC[k]}" onclick="sortPick(${k},this)">${b}</button>`).join('')}</div><div id="fb"></div></div>`};
+function sortPick(k,el){if(SO.lock)return;SO.lock=true;const it=SO.items[SO.i],u=UN[SO.id];let wait=800;
+ if(k===it[1]){el.classList.add('right');$('#si').classList.add('flyok');sfx.good();addXP(5)}
+ else{SO.mist++;el.classList.add('wrong');document.querySelectorAll('.bin')[it[1]].classList.add('hint');sfx.bad();$('#fb').innerHTML=`<div class="fb no">It belongs in <b>${u.sort.bins[it[1]]}</b></div>`;wait=1800}
+ setTimeout(()=>{SO.i++;SO.lock=false;if(SO.i>=SO.items.length)sortEnd();else go('sort')},wait)}
+function sortEnd(){const p=U(SO.id);S.acts++;if(SO.mist===0){p.sort=true;S.perfectSort=true;addXP(15);confetti();sfx.win()}save();checkBadges();go('sortend')}
+SCREENS.sortend=()=>{const u=UN[SO.id],perfect=SO.mist===0;
+ return nav(u.emoji+' Sort it!')+`<div class="panel center result"><div class="bigemoji pop-in">${perfect?'🗂️🏆':'🗂️'}</div><h1>${perfect?'Perfect sort!':'Sorted!'}</h1><p>${SO.items.length-SO.mist} correct · ${SO.mist} mistake${SO.mist===1?'':'s'}</p>${perfect?'':'<p>Get <b>0 mistakes</b> to win the star ⭐</p>'}
+ <div class="row"><button class="btn" onclick="startSort('${SO.id}')">🔁 Play again</button><button class="btn green" onclick="go('unit','${SO.id}')">Back to unit</button></div></div>`};
+
+/* ---------- match ---------- */
+let MA=null;
+function startMatch(id){const seen=new Set(),pairs=[];shuffle(UN[id].match).forEach(p=>{if(pairs.length<5&&!seen.has(p[1])){seen.add(p[1]);pairs.push(p)}});
+ const idx=pairs.map((_,k)=>k);MA={id,pairs,L:shuffle(idx),R:shuffle(idx),sel:null,done:0,mist:0,t0:Date.now()};go('match')}
+SCREENS.match=()=>{const u=UN[MA.id];
+ later(()=>{const t=()=>{const e=$('#mt');if(e)e.textContent=Math.floor((Date.now()-MA.t0)/1000)+'s'};t();TIMERS.push(setInterval(t,500))});
+ return nav(u.emoji+' Match')+`<div class="panel"><div class="mhead"><span>⏱️ <b id="mt">0s</b></span><span>Tap a term, then its partner 👇</span><span>❌ <b id="mm">0</b></span></div>
+ <div class="mcols"><div>${MA.L.map(k=>`<button class="mbtn L" onclick="mTap(this,'L',${k})">${MA.pairs[k][0]}</button>`).join('')}</div><div>${MA.R.map(k=>`<button class="mbtn R" onclick="mTap(this,'R',${k})">${MA.pairs[k][1]}</button>`).join('')}</div></div></div>`};
+function mTap(el,side,k){if(el.classList.contains('ok'))return;sfx.flip();
+ if(!MA.sel||MA.sel.side===side){document.querySelectorAll('.mbtn.sel').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');MA.sel={side,k,el};return}
+ const o=MA.sel;MA.sel=null;o.el.classList.remove('sel');
+ if(o.k===k){o.el.classList.add('ok');el.classList.add('ok');MA.done++;sfx.good();if(MA.done===MA.pairs.length)setTimeout(matchEnd,500)}
+ else{MA.mist++;$('#mm').textContent=MA.mist;[o.el,el].forEach(b=>{b.classList.add('no');setTimeout(()=>b.classList.remove('no'),500)});sfx.bad()}}
+function matchEnd(){const secs=Math.round((Date.now()-MA.t0)/1000);U(MA.id).match=true;S.matches++;S.acts++;if(secs<25)S.fastMatch=true;save();confetti();sfx.win();addXP(15+(MA.mist===0?5:0));go('matchend',secs)}
+SCREENS.matchend=secs=>{const u=UN[MA.id];return nav(u.emoji+' Match')+`<div class="panel center result"><div class="bigemoji pop-in">🧩</div><h1>All matched!</h1><p>⏱️ Time: <b>${secs} s</b> · ❌ Mistakes: <b>${MA.mist}</b></p>${secs>=25?'<p>Can you do it in under <b>25 seconds</b>? There’s a badge for that! ⏱️</p>':'<p>⚡ Super fast!</p>'}
+ <div class="row"><button class="btn" onclick="startMatch('${MA.id}')">🔁 New pairs</button><button class="btn green" onclick="go('unit','${MA.id}')">Back to unit</button></div></div>`};
+
+/* ---------- calc lab ---------- */
+const EL=[['H','Hydrogen',1,1],['He','Helium',2,4],['Li','Lithium',3,7],['Be','Beryllium',4,9],['B','Boron',5,11],['C','Carbon',6,12],['N','Nitrogen',7,14],['O','Oxygen',8,16],['F','Fluorine',9,19],['Ne','Neon',10,20],['Na','Sodium',11,23],['Mg','Magnesium',12,24],['Al','Aluminium',13,27],['Si','Silicon',14,28],['P','Phosphorus',15,31],['S','Sulfur',16,32],['Cl','Chlorine',17,35],['Ar','Argon',18,40],['K','Potassium',19,39],['Ca','Calcium',20,40]];
+const IONS=[['Li',1],['Na',1],['K',1],['Mg',2],['Ca',2],['Al',3],['F',-1],['Cl',-1],['O',-2],['S',-2],['N',-3]];
+function nuc(sym,Z,A,ch=0){const c=ch?`<span class="chg">${Math.abs(ch)>1?Math.abs(ch):''}${ch>0?'+':'−'}</span>`:'';return `<span class="nuc"><span class="ls"><span>${A}</span><span>${Z}</span></span>${sym}${c}</span>`}
+const GEN={
+ chem(){const r=Math.random();
+  if(r<.55){let e,ch=0;if(Math.random()<.45){const io=pick(IONS);e=EL.find(x=>x[0]===io[0]);ch=io[1]}else e=pick(EL);
+   const [sym,name,Z,A]=e,N=A-Z,E=Z-ch,ask=pick(['protons','neutrons','electrons']);
+   const a={protons:Z,neutrons:N,electrons:E}[ask];
+   const sol={protons:`Protons = atomic number (Z) = <b>${Z}</b>`,neutrons:`Neutrons = A − Z = ${A} − ${Z} = <b>${N}</b>`,electrons:ch===0?`Neutral atom → electrons = protons = <b>${Z}</b>`:`Electrons = Z − charge = ${Z} − (${ch>0?'+':''}${ch}) = <b>${E}</b> (${ch>0?'it lost':'it gained'} ${Math.abs(ch)} electron${Math.abs(ch)>1?'s':''})`}[ask];
+   return {html:`<p><b>${name}</b> ${ch?(ch>0?'cation (positive ion)':'anion (negative ion)'):'atom (neutral)'}</p>${nuc(sym,Z,A,ch)}<p class="ask">How many ${ask}?</p>`,a,sol,hint:'Top number = A (mass number) · Bottom number = Z (protons)<br>Neutrons = A − Z · Electrons = Z − charge'}}
+  if(r<.75){const e=pick(EL),Z=e[2],A=e[3],N=A-Z;
+   if(Math.random()<.5)return {html:`<p>An atom of <b>${e[1]}</b> has <b>${Z}</b> protons and <b>${N}</b> neutrons.</p><p class="ask">What is its mass number (A)?</p>`,a:A,sol:`A = protons + neutrons = ${Z} + ${N} = <b>${A}</b>`,hint:'A = protons + neutrons'};
+   return {html:`<p>A mystery atom has mass number <b>${A}</b> and <b>${N}</b> neutrons.</p><p class="ask">What is its atomic number (Z)?</p>`,a:Z,sol:`Z = A − neutrons = ${A} − ${N} = <b>${Z}</b> → it is ${e[1]}!`,hint:'Z = A − neutrons'}}
+  const type=rnd(0,2),i=rnd(2,EL.length-2),e1=EL[i],e2=EL[i+1],Z=e1[2],A=e1[3];let a,b;
+  if(type===0){a=[e1[0],Z,A];b=[e1[0],Z,A+rnd(1,2)]}else if(type===1){a=[e1[0],Z,A+1];b=[e2[0],Z+1,A+1]}else{a=[e1[0],Z,A];b=[e2[0],Z+1,A+1]}
+  const d=x=>`${x[0]}-${x[2]}: ${x[1]} p, ${x[2]-x[1]} n`;
+  return {html:`<p>Look carefully at these two atoms 👀</p><div>${nuc(...a)}${nuc(...b)}</div><p class="ask">These two are…</p>`,choices:['Isotopes','Isobars','Isotones'],a:type,
+   sol:`${d(a)} · ${d(b)}<br>${['Same protons, different neutrons → <b>isotopes</b>','Same mass number → <b>isobars</b>','Same number of neutrons → <b>isotones</b>'][type]}`,hint:'IsotoPes = same Protons · IsotoNes = same Neutrons · IsobArs = same A'}},
+ phys(){const t=pick(['ke','pe','peh','w','wf','eff','effo','waste']);
+  const dev=pick(['💡 A light bulb','🚗 A car engine','🏗️ A pulley system','⚙️ An electric motor','🛝 A ramp']);
+  switch(t){
+  case 'ke':{const m=2*rnd(1,10),v=rnd(1,10),a=m*v*v/2;return {html:`<p>🏃 An object of mass <b>${m} kg</b> moves at <b>${v} m/s</b>.</p><p class="ask">What is its kinetic energy?</p>`,a,unit:'J',sol:`KE = ½ × m × v² = ½ × ${m} × ${v}² = ½ × ${m} × ${v*v} = <b>${a} J</b>`,hint:'KE = ½ × m × v² (square the speed first!)'}}
+  case 'pe':{const m=rnd(1,20),h=rnd(1,15),a=m*10*h;return {html:`<p>⛰️ A <b>${m} kg</b> rock sits <b>${h} m</b> above the ground (g = 10 N/kg).</p><p class="ask">What is its potential energy?</p>`,a,unit:'J',sol:`PE = m × g × h = ${m} × 10 × ${h} = <b>${a} J</b>`,hint:'PE = m × g × h'}}
+  case 'peh':{const m=rnd(1,12),h=rnd(1,15),E=m*10*h;return {html:`<p>📦 A <b>${m} kg</b> box has <b>${E} J</b> of potential energy (g = 10 N/kg).</p><p class="ask">How high is it?</p>`,a:h,unit:'m',sol:`h = PE ÷ (m × g) = ${E} ÷ (${m} × 10) = <b>${h} m</b>`,hint:'h = PE ÷ (m × g)'}}
+  case 'w':{const F=rnd(2,40)*5,d=rnd(2,20),a=F*d;return {html:`<p>💪 You push a box with a force of <b>${F} N</b> for <b>${d} m</b>.</p><p class="ask">How much work do you do?</p>`,a,unit:'J',sol:`W = F × d = ${F} × ${d} = <b>${a} J</b>`,hint:'W = F × d'}}
+  case 'wf':{const F=rnd(2,40)*5,d=rnd(2,20),W=F*d;return {html:`<p>🛒 <b>${W} J</b> of work moves a trolley <b>${d} m</b>.</p><p class="ask">What force was used?</p>`,a:F,unit:'N',sol:`F = W ÷ d = ${W} ÷ ${d} = <b>${F} N</b>`,hint:'F = W ÷ d'}}
+  case 'eff':{const inp=rnd(2,20)*100,e=pick([20,25,40,50,60,75,80,90]),out=inp*e/100;return {html:`<p>${dev} receives <b>${inp} J</b> of input energy and gives <b>${out} J</b> of useful output.</p><p class="ask">What is its efficiency?</p>`,a:e,unit:'%',sol:`Efficiency = ${out} ÷ ${inp} × 100 = <b>${e}%</b>`,hint:'Efficiency = useful output ÷ input × 100'}}
+  case 'effo':{const inp=rnd(2,20)*100,e=pick([20,25,40,50,60,75,80,90]),out=inp*e/100;return {html:`<p>${dev} is <b>${e}%</b> efficient and receives <b>${inp} J</b> of input energy.</p><p class="ask">How much useful energy does it give out?</p>`,a:out,unit:'J',sol:`Useful output = ${e} ÷ 100 × ${inp} = <b>${out} J</b>`,hint:'Useful output = efficiency ÷ 100 × input'}}
+  default:{const inp=rnd(2,20)*100,e=pick([20,25,40,50,60,75,80,90]),out=inp*e/100,w=inp-out;return {html:`<p>${dev} receives <b>${inp} J</b> and gives <b>${out} J</b> of useful energy.</p><p class="ask">How much energy is wasted (heat, sound)?</p>`,a:w,unit:'J',sol:`Wasted = input − useful output = ${inp} − ${out} = <b>${w} J</b>`,hint:'Wasted = input − useful output'}}
+  }}
+};
+let CA=null;
+function startCalc(id){CA={id,n:0,ok:0,cur:null};nextCalc()}
+function nextCalc(){CA.cur=GEN[UN[CA.id].calc]();CA.lock=false;go('calc')}
+SCREENS.calc=()=>{const u=UN[CA.id],c=CA.cur;
+ later(()=>{const i=$('#cin');if(i){i.focus();i.onkeydown=e=>{if(e.key==='Enter')calcCheck()}}});
+ return nav(u.emoji+' Calc Lab')+`<div class="panel center"><div class="calcstats">🧮 Total solved: <b>${U(CA.id).calc}</b> · This session: ${CA.ok}/${CA.n}</div><div class="calcq pop-in">${c.html}</div>
+ ${c.choices?`<div class="opts">${c.choices.map((t,k)=>`<button class="opt" style="text-align:center" onclick="calcChoice(${k})">${t}</button>`).join('')}</div>`:`<div class="calcin"><input id="cin" class="inp num" type="number" inputmode="decimal" step="any" placeholder="?">${c.unit?`<span class="unit">${c.unit}</span>`:''}<button class="btn" onclick="calcCheck()">Check ✔</button></div>`}
+ <details class="hint"><summary>💡 Need a hint?</summary><p>${c.hint}</p></details><div id="fb"></div></div>
+ <div class="row"><button class="btn alt" onclick="go('unit','${CA.id}')">⬅ Back to unit</button></div>`};
+function calcCheck(){if(CA.lock)return;const i=$('#cin'),v=parseFloat(String(i.value).replace(',','.'));if(isNaN(v)){i.classList.remove('shake');void i.offsetWidth;i.classList.add('shake');return}
+ i.disabled=true;calcResult(Math.abs(v-CA.cur.a)<=Math.max(.01,Math.abs(CA.cur.a)*.01))}
+function calcChoice(k){if(CA.lock)return;const b=document.querySelectorAll('.opt');b.forEach((x,j)=>{x.disabled=true;if(j===CA.cur.a)x.classList.add('right')});if(k!==CA.cur.a)b[k].classList.add('wrong');calcResult(k===CA.cur.a)}
+function calcResult(ok){CA.lock=true;CA.n++;const p=U(CA.id);
+ if(ok){CA.ok++;p.calc++;if(UN[CA.id].calc==='chem')S.chemCalc++;else S.physCalc++;if(p.calc===1)S.acts++;sfx.good();addXP(8);if(p.calc===5){confetti();toast('⭐ Calc Lab star earned!')}}else sfx.bad();
+ save();$('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'🎉 '+pick(['Correct!','Spot on!','Math wizard!','Brilliant!']):'😅 Not quite – here’s how:'}<p>${CA.cur.sol}</p><button class="btn green" onclick="nextCalc()">Next problem ➡</button></div>`}
+
+/* ---------- lightning ---------- */
+let LI=null;
+SCREENS.lightning=()=>nav('⚡ Lightning Round')+`<div class="panel center"><div class="bigemoji bounce">⚡</div><h1>Lightning Round</h1><p style="font-size:18px">Answer as many questions as you can in <b>60 seconds</b>!<br>Questions from <b>all</b> topics. +5 XP for every correct answer.</p><p>🏆 Your record: <b>${S.lightBest}</b></p><div class="row"><button class="btn big green" onclick="startLightning()">GO! 🚀</button></div></div>`;
+function startLightning(){const all=[];UNITS.forEach(u=>u.quiz.forEach(q=>all.push([q,u])));LI={pool:shuffle(all),i:0,score:0,wrong:0,end:Date.now()+60000,over:false,lock:false};go('lplay')}
+SCREENS.lplay=()=>{const it=LI.pool[LI.i%LI.pool.length],q=prep(it[0]);LI.cur=q;
+ later(()=>{const tick=()=>{const left=Math.max(0,LI.end-Date.now()),el=$('#ltime');if(!el)return;el.textContent=Math.ceil(left/1000)+'s';$('#lbar').style.width=(left/600)+'%';if(left<=0)lightEnd()};tick();TIMERS.push(setInterval(tick,200))});
+ return nav('⚡ Lightning')+`<div class="lhead"><span id="ltime">60s</span><span>✅ ${LI.score}</span></div><div class="bar"><div id="lbar"></div></div>
+ <div class="panel"><span class="tag" style="background:${it[1].color}">${it[1].emoji} ${it[1].short}</span><h2 class="q">${q.q}</h2><div class="opts">${q.opts.map((o,k)=>`<button class="opt" onclick="lAns(${k})">${o.t}</button>`).join('')}</div></div>`};
+function lAns(k){if(LI.lock||LI.over)return;LI.lock=true;const q=LI.cur,b=document.querySelectorAll('.opt'),ok=q.opts[k].ok;
+ b.forEach((x,j)=>{if(q.opts[j].ok)x.classList.add('right')});if(ok){LI.score++;sfx.good()}else{LI.wrong++;b[k].classList.add('wrong');sfx.bad()}
+ setTimeout(()=>{if(LI.over)return;LI.i++;LI.lock=false;go('lplay')},ok?350:1000)}
+function lightEnd(){if(LI.over)return;LI.over=true;const rec=LI.score>S.lightBest;S.lightBest=Math.max(S.lightBest,LI.score);S.acts++;save();if(rec&&LI.score>0){confetti();sfx.win()}go('lend',rec);if(LI.score)addXP(LI.score*5);else checkBadges()}
+SCREENS.lend=rec=>nav('⚡ Lightning')+`<div class="panel center result"><div class="bigemoji pop-in">${rec?'🏆':'⏰'}</div><h1>Time’s up!</h1><h2>✅ ${LI.score} correct · ❌ ${LI.wrong} wrong</h2>${rec?'<p>🎊 <b>NEW RECORD!</b></p>':`<p>Your record: <b>${S.lightBest}</b></p>`}
+ <div class="row"><button class="btn green" onclick="startLightning()">🔁 Again!</button><button class="btn alt" onclick="go('home')">🏠 Home</button></div></div>`;
+
+/* ---------- badges & report ---------- */
+SCREENS.badges=()=>{const n=Object.keys(S.badges).length;return nav('🏅 Badges')+`<div class="panel center"><h1>🏅 ${n} / ${BADGES.length} badges</h1><div class="xpbar"><div style="width:${n/BADGES.length*100}%"></div></div></div>
+ <div class="bgrid">${BADGES.map(([id,e,nm,d])=>`<div class="badge ${S.badges[id]?'':'locked'}"><span class="be">${e}</span><b>${nm}</b><small>${S.badges[id]?'✅ '+new Date(S.badges[id]).toLocaleDateString():d}</small></div>`).join('')}</div>`};
+SCREENS.report=()=>{const nb=Object.keys(S.badges).length;
+ return nav('📋 My Report')+`<div class="panel"><div class="rephead"><div class="avatar big">${S.avatar}</div><div><h2>${esc(S.name)}</h2><div><b>Level ${level()}</b> · ${rankTitle()} · ${S.xp} XP · 🏅 ${nb}/${BADGES.length} badges</div><small>Science Quest 7 · Report generated ${new Date().toLocaleString()}</small></div></div>
+ <div class="tablewrap"><table><tr><th>Unit</th><th>Cards</th><th>Best quiz</th><th>Sort</th><th>Match</th><th>Calc</th><th>Stars</th></tr>${UNITS.map(u=>{const p=U(u.id),st=unitStars(u);return `<tr><td>${u.emoji} ${u.short}</td><td>${p.seen.length}/${u.cards.length}</td><td>${p.best}%</td><td>${p.sort?'✅':'—'}</td><td>${p.match?'✅':'—'}</td><td>${u.calc?p.calc:'n/a'}</td><td>${st.got}/${st.total}</td></tr>`}).join('')}</table></div>
+ <p>⚡ Lightning record: <b>${S.lightBest}</b> · 🔥 Best streak: <b>${S.bestStreak}</b> · 📅 Days practised: <b>${S.days.length}</b> · ❓ Quizzes taken: <b>${S.quizzes}</b></p>
+ <div class="row noprint"><button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button><button class="btn alt" onclick="go('home')">🏠 Home</button></div></div>`};
+
+/* ---------- start ---------- */
+go(S.name?'home':'welcome');
+checkBadges();
+</script>
+</body>
+</html>
