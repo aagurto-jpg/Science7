@@ -170,6 +170,7 @@ textarea{width:100%;min-height:90px;border-radius:14px;border:3px solid #dfe6e9;
 @keyframes toast{0%{opacity:0;transform:translateY(-10px)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-12px)}}
 .conf{position:fixed;top:-12px;width:10px;height:14px;z-index:300;border-radius:2px;animation:fall linear forwards;pointer-events:none}
 @keyframes fall{to{transform:translate(var(--dx),105vh) rotate(760deg)}}
+.utile.lock{filter:grayscale(1);opacity:.6}.utile small{display:block;margin-top:6px;font-weight:700}
 .result .bigemoji{font-size:90px}
 .big3{font-size:44px;letter-spacing:6px}
 @media(max-width:560px){
@@ -475,6 +476,44 @@ const UNITS = [
   ['Parasitism','A tapeworm living in an intestine'],['Competition','Two lions fighting over the same prey'],
   ['Tundra','Frozen ground (permafrost), no trees'],['Desert','Less than 250 mm of rain per year'],['Tropical rainforest','Hot, wet, highest biodiversity'],
   ['Taiga','Coniferous forest with snowy winters'],['Savanna','Grassland with scattered trees'],['Temperate forest','Trees lose leaves in autumn']]
+},
+{id:'virus',name:'Viruses: Alive or Not?',short:'Viruses',emoji:'🧫',color:'#d63031',
+ blurb:'Virus structure, how they replicate, and why they are not living organisms.',calc:null,
+ cards:[
+  ['🦠','What is a Virus?','A tiny infectious particle, about <b>20–300 nm</b>: far smaller than bacteria. You need an <b>electron microscope</b> to see one.'],
+  ['🧱','Virus Structure','<b>Genetic material</b> (DNA or RNA) inside a protein coat called the <b>capsid</b>. Some also have a fatty <b>envelope</b>.'],
+  ['🔑','Hijacking a Host','A virus can only reproduce <b>inside a host cell</b>. It uses the host’s ribosomes and energy.'],
+  ['🔁','Lytic Cycle','1️⃣ Attach 2️⃣ Inject genetic material 3️⃣ Host copies viral parts 4️⃣ Assemble 5️⃣ Cell <b>bursts (lysis)</b> and new viruses escape.'],
+  ['❌','Not Made of Cells','No cell membrane, cytoplasm or organelles. <b>Cell theory</b> says living things are made of cells, so viruses break the first rule.'],
+  ['🚫','No Metabolism','Viruses do not respire, grow, use energy or keep homeostasis. Outside a host they are <b>inactive particles</b>.'],
+  ['⚖️','Why NOT Living?','They fail the checklist: <b>no cells, no metabolism, no growth, no homeostasis, cannot reproduce alone</b>. They do have DNA/RNA and can mutate, so some call them “on the edge of life”.'],
+  ['🧬','Mutation','Viruses change over time, creating new variants (like the flu each year). Inheritance alone does not make something alive.'],
+  ['🏥','Viral Diseases','Flu, common cold, measles, dengue, COVID-19. <b>Antibiotics do not work</b> on viruses.'],
+  ['🆚','Virus vs Bacterium','Bacteria are <b>living cells</b> that reproduce alone and can be treated with antibiotics. Viruses are not cells and need a host.'],
+  ['💉','Defence','<b>Vaccines</b> train your immune system. Wash hands, cover coughs and stay home when ill.']
+ ],
+ quiz:[
+  ['How big is a typical virus compared with a bacterium?',['Much smaller','About the same size','Much bigger','Exactly the same'],''],
+  ['What is the protein coat of a virus called?',['Capsid','Nucleus','Cell wall','Cytoplasm'],''],
+  ['A virus can only reproduce…',['Inside a host cell','In the air','In sunlight','In clean water alone'],''],
+  ['Which is NOT part of a virus?',['Cytoplasm','Capsid','DNA or RNA','Surface proteins'],'Viruses have no cytoplasm.'],
+  ['Why are viruses NOT considered living organisms?',['They are not cells and cannot reproduce or use energy alone','They are too small','They cause disease','They contain DNA'],'They fail several characteristics of life.'],
+  ['Which characteristic of life do viruses lack?',['Metabolism','Having genetic material','Being tiny','Having a shape'],''],
+  ['Which statement is TRUE about viruses?',['They have DNA or RNA but no cells','They are single-celled','They have mitochondria','They make their own food'],''],
+  ['Antibiotics are effective against…',['Bacteria, not viruses','Viruses, not bacteria','Both','Neither'],''],
+  ['Which disease is caused by a virus?',['Influenza (flu)','Strep throat','Tuberculosis','Cholera'],'The others are bacterial.'],
+  ['What do vaccines do?',['Train the immune system to recognise a pathogen','Kill all bacteria','Make viruses larger','Replace antibiotics'],''],
+  ['In the lytic cycle, the host cell finally…',['Bursts open releasing new viruses','Divides normally','Makes food','Becomes a bacterium'],''],
+  ['Which part of cell theory do viruses break?',['All living things are made of cells','All cells come from cells','Hooke named cells','Cells have a nucleus'],'Viruses are not made of cells.']
+ ],
+ sort:{title:'Virus, bacterium or both?',bins:['Virus 🧫','Bacterium 🦠','Both'],items:[
+  ['Not made of cells',0],['Needs a host cell to reproduce',0],['Has a protein capsid',0],['Not treated by antibiotics',0],
+  ['Has cytoplasm and ribosomes',1],['Reproduces on its own',1],['Has its own metabolism',1],['Treated with antibiotics',1],
+  ['Contains genetic material',2],['Can cause disease',2],['Can mutate over time',2],['Spread is reduced by good hygiene',2]]},
+ match:[
+  ['Capsid','Protein coat around genetic material'],['Host cell','Cell a virus needs to reproduce'],['Lysis','Host cell bursts open'],
+  ['Vaccine','Trains immunity against a pathogen'],['Antibiotic','Kills bacteria, not viruses'],['Envelope','Fatty outer layer of some viruses'],
+  ['Electron microscope','Needed to see viruses'],['Virus','Non-cellular particle with DNA or RNA']]
 }
 ];
 
@@ -488,7 +527,7 @@ const XP_PER_LEVEL=150;
 const KEY='sciquest7_agurto_v1';
 const $=s=>document.querySelector(s);
 const app=$('#app');
-function blank(){return {name:'',avatar:'🧪',xp:0,badges:{},units:{},cardsSeen:0,chemCalc:0,physCalc:0,bestStreak:0,lightBest:0,matches:0,quizzes:0,acts:0,perfect:false,perfectSort:false,fastMatch:false,days:[],mute:false}}
+function blank(){return {chars:{},bosses:{},name:'',avatar:'🧪',xp:0,badges:{},units:{},cardsSeen:0,chemCalc:0,physCalc:0,bestStreak:0,lightBest:0,matches:0,quizzes:0,acts:0,perfect:false,perfectSort:false,fastMatch:false,days:[],mute:false}}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&typeof d==='object')return Object.assign(blank(),d)}catch(e){}return blank()}
 let S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
@@ -539,9 +578,9 @@ const BADGES=[
  ['days3','📅','Regular Scientist','Practise on 3 different days',()=>S.days.length>=3],
  ['lv5','🌟','Rising Star','Reach Level 5',()=>level()>=5],
  ...UNITS.map(u=>['m_'+u.id,u.emoji,u.short+' Master','Score 80%+ in the '+u.name+' quiz',()=>U(u.id).best>=80]),
- ['legend','👑','Science Legend','Master all 6 units',()=>UNITS.every(u=>U(u.id).best>=80)]
+ ['legend','👑','Science Legend','Master all units',()=>UNITS.every(u=>U(u.id).best>=80)]
 ];
-function checkBadges(){let any=false;BADGES.forEach(([id,e,n,d,t])=>{if(!S.badges[id]&&t()){S.badges[id]=Date.now();any=true;popup(`<div class="bigemoji spin">${e}</div><h2>New badge!</h2><h3>${n}</h3><p>${d}</p>`)}});if(any){save();sfx.win();confetti(90);const b=$('#badgechip');if(b)b.textContent='🏅 '+Object.keys(S.badges).length}}
+function checkBadges(){checkChars();let any=false;BADGES.forEach(([id,e,n,d,t])=>{if(!S.badges[id]&&t()){S.badges[id]=Date.now();any=true;popup(`<div class="bigemoji spin">${e}</div><h2>New badge!</h2><h3>${n}</h3><p>${d}</p>`)}});if(any){save();sfx.win();confetti(90);const b=$('#badgechip');if(b)b.textContent='🏅 '+Object.keys(S.badges).length}}
 
 /* ---------- router ---------- */
 let TIMERS=[],AFTER=[];
@@ -554,14 +593,14 @@ const SCREENS={};
 /* ---------- welcome & profile ---------- */
 SCREENS.welcome=()=>`<div class="panel center"><div class="bigemoji bounce">🔬</div><h1 class="title" style="font-size:38px">Science Quest 7</h1><p style="font-size:18px">Your Grade 7 science adventure!<br>Learn ⚡ Play ⚡ Earn badges ⚡ Level up</p>
 <label class="lbl">What’s your name?</label><input id="nm" class="inp" maxlength="24" placeholder="Type your name" value="${esc(S.name)}">
-<label class="lbl">Choose your avatar</label><div class="avatars">${AVATARS.map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
+<label class="lbl">Choose your avatar</label><div class="avatars">${avList().map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
 <div class="row" style="margin-top:20px"><button class="btn big green" onclick="startGame()">Start my quest 🚀</button></div>
 <p><small>Already played on another device? Go to ⚙️ Profile later to load your save code.</small></p></div>`;
 function pickAv(el,a){S.avatar=a;document.querySelectorAll('.av').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');sfx.flip()}
 function startGame(){const i=$('#nm'),n=i.value.trim();if(!n){i.classList.remove('shake');void i.offsetWidth;i.classList.add('shake');i.focus();return}S.name=n;save();sfx.win();go('home')}
 
 SCREENS.profile=()=>nav('⚙️ Profile')+`<div class="panel center"><label class="lbl">Your name</label><input id="nm" class="inp" maxlength="24" value="${esc(S.name)}">
-<label class="lbl">Your avatar</label><div class="avatars">${AVATARS.map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
+<label class="lbl">Your avatar</label><div class="avatars">${avList().map(a=>`<button class="av ${a===S.avatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</button>`).join('')}</div>
 <div class="row"><button class="btn green" onclick="saveProfile()">💾 Save</button></div></div>
 <div class="panel"><h3>📲 Move your progress to another device</h3><p>Your progress is saved automatically in <b>this browser</b>. To continue on another computer or phone, copy this code and paste it there.</p>
 <textarea id="exp" readonly onclick="this.select()">${exportCode()}</textarea><div class="row"><button class="btn alt" onclick="copyCode()">📋 Copy code</button></div>
@@ -577,8 +616,9 @@ function resetAll(){if(confirm('Delete ALL your progress, XP and badges? This ca
 SCREENS.home=()=>{if(!S.name)return SCREENS.welcome();const into=S.xp%XP_PER_LEVEL;
  return nav('Science Quest 7')+`<section class="hero"><div class="avatar big">${S.avatar}</div><div style="flex:1"><h1>Hi, ${esc(S.name)}!</h1><div class="rank">Level ${level()} · ${rankTitle()}</div><div class="xpbar"><div style="width:${into/XP_PER_LEVEL*100}%"></div></div><small>${into}/${XP_PER_LEVEL} XP to Level ${level()+1}</small></div></section>
  <button class="lightning" onclick="go('lightning')">⚡ Lightning Round ⚡<small>60 seconds · all topics · beat your record (${S.lightBest})</small></button>
- <div class="grid">${UNITS.map(u=>{const st=unitStars(u);return `<button class="utile" style="background:${u.color}" onclick="go('unit','${u.id}')"><span class="ue">${u.emoji}</span><h3>${u.name}</h3><div class="stars">${starStr(st)}</div><div class="ubar"><div style="width:${st.got/st.total*100}%"></div></div></button>`}).join('')}</div>
- <div class="row" style="margin-top:16px"><button class="btn alt" onclick="go('badges')">🏅 Badges</button><button class="btn alt" onclick="go('report')">📋 My Report</button><button class="btn alt" onclick="go('profile')">⚙️ Profile</button></div>`};
+ <button class="lightning" style="background:linear-gradient(90deg,#2d3436,#d63031)" onclick="go('bosses')">⚔️ Boss Arena ⚔️<small>${Object.keys(S.bosses).length}/6 bosses defeated · unlock heroes</small></button>
+  <div class="grid">${UNITS.map(u=>{const st=unitStars(u);return `<button class="utile" style="background:${u.color}" onclick="go('unit','${u.id}')"><span class="ue">${u.emoji}</span><h3>${u.name}</h3><div class="stars">${starStr(st)}</div><div class="ubar"><div style="width:${st.got/st.total*100}%"></div></div></button>`}).join('')}</div>
+ <div class="row" style="margin-top:16px"><button class="btn alt" onclick="go('heroes')">🦸 Heroes</button><button class="btn alt" onclick="go('badges')">🏅 Badges</button><button class="btn alt" onclick="go('report')">📋 My Report</button><button class="btn alt" onclick="go('profile')">⚙️ Profile</button></div>`};
 
 /* ---------- unit ---------- */
 SCREENS.unit=id=>{const u=UN[id],p=U(id),st=unitStars(u);
@@ -728,6 +768,80 @@ SCREENS.report=()=>{const nb=Object.keys(S.badges).length;
  <div class="tablewrap"><table><tr><th>Unit</th><th>Cards</th><th>Best quiz</th><th>Sort</th><th>Match</th><th>Calc</th><th>Stars</th></tr>${UNITS.map(u=>{const p=U(u.id),st=unitStars(u);return `<tr><td>${u.emoji} ${u.short}</td><td>${p.seen.length}/${u.cards.length}</td><td>${p.best}%</td><td>${p.sort?'✅':'—'}</td><td>${p.match?'✅':'—'}</td><td>${u.calc?p.calc:'n/a'}</td><td>${st.got}/${st.total}</td></tr>`}).join('')}</table></div>
  <p>⚡ Lightning record: <b>${S.lightBest}</b> · 🔥 Best streak: <b>${S.bestStreak}</b> · 📅 Days practised: <b>${S.days.length}</b> · ❓ Quizzes taken: <b>${S.quizzes}</b></p>
  <div class="row noprint"><button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button><button class="btn alt" onclick="go('home')">🏠 Home</button></div></div>`};
+
+
+/* ---------- extra exercises ---------- */
+const outer=Z=>Z<=2?Z:Z<=10?Z-2:Z-10;
+const MASS={H:1,C:12,N:14,O:16,Na:23,Mg:24,S:32};
+const CMP=[['H₂O',{H:2,O:1}],['CO₂',{C:1,O:2}],['CH₄',{C:1,H:4}],['NH₃',{N:1,H:3}],['MgO',{Mg:1,O:1}],['NaOH',{Na:1,O:1,H:1}],['H₂SO₄',{H:2,S:1,O:4}],['Na₂O',{Na:2,O:1}],['CO',{C:1,O:1}],['C₂H₆',{C:2,H:6}]];
+const FORM=[['H₂O',3],['CO₂',3],['NH₃',4],['CH₄',5],['H₂SO₄',7],['C₆H₁₂O₆',24],['Ca(OH)₂',5],['Mg(NO₃)₂',9],['Al₂O₃',5],['NaCl',2]];
+const CH2=()=>{switch(rnd(0,4)){
+ case 0:{const p=rnd(3,20),e=rnd(p-3,p+3),a=p-e;return {html:`<p>A particle has <b>${p} protons</b> and <b>${e} electrons</b>.</p><p class="ask">What is its overall charge? (use − for negative)</p>`,a,sol:`Charge = protons − electrons = ${p} − ${e} = <b>${a}</b>`,hint:'Charge = protons − electrons'}}
+ case 1:{const x=pick(EL.filter(x=>x[2]>=3&&x[2]<=18)),Z=x[2],c=[Math.min(Z,2),Math.min(Math.max(Z-2,0),8),Math.max(Z-10,0)].filter(n=>n>0).join(', ');return {html:`<p><b>${x[1]}</b> (Z = ${Z}) is a neutral atom. Shells hold 2, 8, 8 electrons.</p><p class="ask">How many electrons are in its outer shell?</p>`,a:outer(Z),sol:`Electron arrangement: <b>${c}</b> → outer shell has <b>${outer(Z)}</b>`,hint:'Fill shells in order: 2, then 8, then 8'}}
+ case 2:{const f=pick(FORM);return {html:`<p>Count every atom in one unit of <b>${f[0]}</b>.</p><p class="ask">How many atoms in total?</p>`,a:f[1],sol:`Add the subscripts (multiply those in brackets): <b>${f[1]}</b> atoms`,hint:'Subscripts tell how many atoms. Brackets multiply.'}}
+ case 3:{const c=pick(CMP),m=Object.entries(c[1]).reduce((s,[k,n])=>s+MASS[k]*n,0);return {html:`<p>Relative atomic masses: H=1, C=12, N=14, O=16, Na=23, Mg=24, S=32.</p><p class="ask">What is the relative formula mass of <b>${c[0]}</b>?</p>`,a:m,sol:`Add all atomic masses: ${Object.entries(c[1]).map(([k,n])=>`${n}×${MASS[k]}`).join(' + ')} = <b>${m}</b>`,hint:'Multiply each atomic mass by its subscript, then add.'}}
+ default:{const d=rnd(1,9),V=rnd(2,20),m=d*V,t=rnd(0,2);
+  if(t===0)return {html:`<p>A block has mass <b>${m} g</b> and volume <b>${V} cm³</b>.</p><p class="ask">What is its density?</p>`,a:d,unit:'g/cm³',sol:`ρ = m ÷ V = ${m} ÷ ${V} = <b>${d} g/cm³</b>`,hint:'Density = mass ÷ volume'}
+  if(t===1)return {html:`<p>A metal has density <b>${d} g/cm³</b> and volume <b>${V} cm³</b>.</p><p class="ask">What is its mass?</p>`,a:m,unit:'g',sol:`m = ρ × V = ${d} × ${V} = <b>${m} g</b>`,hint:'Mass = density × volume'}
+  return {html:`<p>A liquid has density <b>${d} g/cm³</b> and mass <b>${m} g</b>.</p><p class="ask">What is its volume?</p>`,a:V,unit:'cm³',sol:`V = m ÷ ρ = ${m} ÷ ${d} = <b>${V} cm³</b>`,hint:'Volume = mass ÷ density'}}}};
+const PH2=()=>{switch(rnd(0,7)){
+ case 0:{const v=rnd(2,15),t=rnd(2,20),d=v*t,k=rnd(0,2);const o=[[`<b>${d} m</b> in <b>${t} s</b>`,'speed',v,'m/s',`v = d ÷ t = ${d} ÷ ${t} = <b>${v} m/s</b>`,'v = d ÷ t'],[`at <b>${v} m/s</b> for <b>${t} s</b>`,'distance',d,'m',`d = v × t = ${v} × ${t} = <b>${d} m</b>`,'d = v × t'],[`<b>${d} m</b> at <b>${v} m/s</b>`,'time taken',t,'s',`t = d ÷ v = ${d} ÷ ${v} = <b>${t} s</b>`,'t = d ÷ v']][k];return {html:`<p>🚴 A cyclist travels ${o[0]}.</p><p class="ask">Find the ${o[1]}.</p>`,a:o[2],unit:o[3],sol:o[4],hint:o[5]}}
+ case 1:{const m=rnd(2,80);return {html:`<p>🌍 A student has a mass of <b>${m} kg</b> (g = 10 N/kg).</p><p class="ask">What is the weight?</p>`,a:m*10,unit:'N',sol:`W = m × g = ${m} × 10 = <b>${m*10} N</b>`,hint:'Weight = mass × g'}}
+ case 2:{const A=rnd(2,10),P=rnd(2,40)*10,F=A*P;return {html:`<p>A force of <b>${F} N</b> acts on an area of <b>${A} m²</b>.</p><p class="ask">What is the pressure?</p>`,a:P,unit:'Pa',sol:`P = F ÷ A = ${F} ÷ ${A} = <b>${P} Pa</b>`,hint:'Pressure = force ÷ area'}}
+ case 3:{const P=rnd(2,30)*10,t=rnd(2,20),W=P*t;return {html:`<p>⚙️ A motor does <b>${W} J</b> of work in <b>${t} s</b>.</p><p class="ask">What is its power?</p>`,a:P,unit:'W',sol:`Power = work ÷ time = ${W} ÷ ${t} = <b>${P} W</b>`,hint:'Power = work ÷ time'}}
+ case 4:{const m=rnd(1,20),a=rnd(1,10);return {html:`<p>🚀 A <b>${m} kg</b> trolley accelerates at <b>${a} m/s²</b>.</p><p class="ask">What force acts on it?</p>`,a:m*a,unit:'N',sol:`F = m × a = ${m} × ${a} = <b>${m*a} N</b>`,hint:'F = m × a'}}
+ case 5:{const e=rnd(2,20)*10,ma=pick([2,3,4,5,10]),L=e*ma;return {html:`<p>🏗️ A machine lifts a load of <b>${L} N</b> using an effort of <b>${e} N</b>.</p><p class="ask">What is the mechanical advantage?</p>`,a:ma,sol:`MA = load ÷ effort = ${L} ÷ ${e} = <b>${ma}</b>`,hint:'Mechanical advantage = load ÷ effort'}}
+ case 6:{const h=pick([5,20,45,80]),v=Math.sqrt(20*h);return {html:`<p>🎾 A ball falls <b>${h} m</b> from rest (g = 10 N/kg, no air resistance).</p><p class="ask">How fast is it moving just before landing?</p>`,a:v,unit:'m/s',sol:`PE → KE: g×h = ½v² → v = √(2 × 10 × ${h}) = √${20*h} = <b>${v} m/s</b>`,hint:'All PE becomes KE: m×g×h = ½×m×v², so v = √(2gh)'}}
+ default:{const m=rnd(1,10),h=rnd(2,20);return {html:`<p>🍎 A <b>${m} kg</b> object falls from <b>${h} m</b> (g = 10 N/kg).</p><p class="ask">How much kinetic energy does it have just before landing?</p>`,a:m*10*h,unit:'J',sol:`Energy is conserved: KE = PE = ${m} × 10 × ${h} = <b>${m*10*h} J</b>`,hint:'KE at the bottom = PE at the top'}}}};
+const _gc=GEN.chem,_gp=GEN.phys;GEN.chem=()=>Math.random()<.5?CH2():_gc();GEN.phys=()=>Math.random()<.6?PH2():_gp();
+
+/* ---------- heroes ---------- */
+const CHARS=[
+ ['🧙','Wizard Wally','Reach Level 3',()=>level()>=3],
+ ['🦄','Quantum Unicorn','Reach Level 7',()=>level()>=7],
+ ['🥼','Dr. Variable','Defeat Dr. Zero-Control',()=>S.bosses.b1,'b1'],
+ ['🧑‍🚀','Astro Atom','Defeat Atom Smasher',()=>S.bosses.b2,'b2'],
+ ['🦾','Kinetic Kid','Defeat Colonel Friction',()=>S.bosses.b3,'b3'],
+ ['🧝','Cellina','Defeat Zombie Cell',()=>S.bosses.b4,'b4'],
+ ['🐉','Eco Dragon','Defeat Toxi-Pest',()=>S.bosses.b5,'b5'],
+ ['🦸','Captain Immunity','Defeat the Virus King',()=>S.bosses.b6,'b6']];
+function avList(){return AVATARS.concat(CHARS.filter(c=>S.chars[c[0]]).map(c=>c[0]))}
+function checkChars(){let n=0;CHARS.forEach(c=>{if(!S.chars[c[0]]&&c[3]()){S.chars[c[0]]=1;n++;popup(`<div class="bigemoji spin">${c[0]}</div><h2>Hero unlocked!</h2><h3>${c[1]}</h3><p>Equip it in 🦸 Heroes or ⚙️ Profile.</p>`,'Cool! 😎')}});if(n){save();sfx.win()}}
+SCREENS.heroes=()=>nav('🦸 Heroes')+`<div class="panel center"><h1>🦸 Hall of Heroes</h1><p>${Object.keys(S.chars).length} / ${CHARS.length} unlocked</p></div><div class="bgrid">${CHARS.map(c=>{const on=S.chars[c[0]];return `<div class="badge ${on?'':'locked'}"><span class="be">${c[0]}</span><b>${on?c[1]:'???'}</b><small>${on?'':'🔒 '+c[2]}</small>${on?`<button class="btn" style="font-size:14px;padding:6px 12px;margin:6px 0 0" onclick="S.avatar='${c[0]}';save();toast('Hero equipped! ✅');go('heroes')">${S.avatar===c[0]?'✔ Equipped':'Use'}</button>`:''}</div>`}).join('')}</div>`;
+
+/* ---------- bosses ---------- */
+const BOSSES=[
+ {id:'b1',e:'👹',name:'Dr. Zero-Control',u:['method'],c:'#6c5ce7',intro:'Changes ALL the variables at once!'},
+ {id:'b2',e:'💣',name:'Atom Smasher',u:['chem'],c:'#00a8a8',intro:'Scrambles protons, neutrons and electrons.'},
+ {id:'b3',e:'🗿',name:'Colonel Friction',u:['phys'],c:'#e67e22',intro:'Steals energy and wastes it as heat.'},
+ {id:'b4',e:'🧟',name:'Zombie Cell',u:['life','cells'],c:'#e84393',intro:'Breaks cell theory with undead organelles.'},
+ {id:'b5',e:'🐛',name:'Toxi-Pest',u:['eco'],c:'#27ae60',intro:'Wrecks food webs and biomes.'},
+ {id:'b6',e:'👾',name:'The Virus King',u:[],c:'#d63031',intro:'Hijacks cells. Questions from EVERY unit!'}];
+const bossOK=b=>b.id==='b6'?BOSSES.slice(0,5).every(x=>S.bosses[x.id])&&U('virus').best>=60:b.u.every(i=>U(i).best>=60);
+const bossNeed=b=>b.id==='b6'?'Defeat the other 5 bosses and score 60%+ in Viruses':'Score 60%+ in the quiz: '+b.u.map(i=>UN[i].short).join(' + ');
+function bossQ(ids){const u=UN[pick(ids)];
+ if(u.calc&&Math.random()<.5){const c=GEN[u.calc]();let o;
+  if(c.choices)o=c.choices.map((t,k)=>({t,ok:k===c.a}));
+  else{const a=c.a,s=new Set([a]);while(s.size<4)s.add(+(a+pick([-1,1])*rnd(1,Math.max(3,Math.round(Math.abs(a)*.4)))).toFixed(2));o=[...s].map(v=>({t:v+(c.unit?' '+c.unit:''),ok:v===a}))}
+  return {q:c.html,e:c.sol,opts:shuffle(o)}}
+ return prep(pick(u.quiz))}
+let BT=null;
+function startBoss(id){const b=BOSSES.find(x=>x.id===id);if(!bossOK(b))return;const hp=id==='b6'?10:8;
+ BT={b,hp,max:hp,hearts:3,i:0,lock:false,qs:Array.from({length:hp+2},()=>bossQ(id==='b6'?UNITS.map(u=>u.id):b.u))};go('bplay')}
+SCREENS.bosses=()=>nav('⚔️ Boss Arena')+`<div class="panel center"><h1>⚔️ Boss Arena</h1><p>Every correct answer damages the boss. Lose 3 hearts and you retreat. Bosses mix quiz questions with physics and chemistry problems!</p></div><div class="grid">${BOSSES.map(b=>{const ok=bossOK(b),d=S.bosses[b.id];return `<button class="utile ${ok?'':'lock'}" style="background:${b.c}" onclick="${ok?`startBoss('${b.id}')`:`toast('🔒 Not yet!')`}"><span class="ue">${ok?b.e:'🔒'}</span><h3>${b.name}</h3><small>${d?'✅ Defeated':ok?b.intro:bossNeed(b)}</small></button>`}).join('')}</div>`;
+SCREENS.bplay=()=>{const b=BT.b,q=BT.qs[BT.i];
+ return nav('⚔️ '+b.name)+`<div class="panel center"><div class="bigemoji ${BT.hit?'shake':'bounce'}" style="font-size:84px">${b.e}</div><h2>${b.name}</h2><div class="bar" style="background:#dfe6e9"><div style="width:${BT.hp/BT.max*100}%;background:linear-gradient(90deg,#ff7675,#d63031)"></div></div><b>Boss HP ${BT.hp}/${BT.max}</b> · You: ${'💚'.repeat(BT.hearts)}${'🖤'.repeat(3-BT.hearts)}
+ <div class="calcq">${q.q}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt" onclick="bAns(${k})">${o.t}</button>`).join('')}</div><div id="fb"></div></div>`};
+function bAns(k){if(BT.lock)return;BT.lock=true;const q=BT.qs[BT.i],bs=document.querySelectorAll('.opt'),ok=q.opts[k].ok;
+ bs.forEach((x,j)=>{x.disabled=true;if(q.opts[j].ok)x.classList.add('right')});
+ if(ok){BT.hp--;sfx.good()}else{BT.hearts--;bs[k].classList.add('wrong');sfx.bad()}
+ const end=BT.hp<=0||BT.hearts<=0;
+ $('#fb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'💥 Direct hit!':'💔 The boss strikes!'}${q.e?`<p>💡 ${q.e}</p>`:''}<button class="btn" onclick="bNext()">${end?'Continue ⚔️':'Next ➡'}</button></div>`}
+function bNext(){if(BT.hp<=0)return bossWin();if(BT.hearts<=0){S.acts++;save();sfx.bad();return go('bend',false)}BT.i++;BT.lock=false;go('bplay')}
+function bossWin(){const id=BT.b.id,first=!S.bosses[id];S.bosses[id]=Date.now();S.acts++;save();confetti(120);sfx.win();go('bend',true);addXP(first?(id==='b6'?100:40):10)}
+SCREENS.bend=win=>{const b=BT.b,ch=CHARS.find(c=>c[4]===b.id);
+ return nav('⚔️ '+b.name)+`<div class="panel center result"><div class="bigemoji pop-in">${win?'🏆':b.e}</div><h1>${win?'Boss defeated!':'The boss escaped…'}</h1><p>${win?(ch?`Hero reward: <b>${ch[0]} ${ch[1]}</b>`:''):'Review the cards and try again. You can do it!'}</p><div class="row"><button class="btn" onclick="startBoss('${b.id}')">🔁 Fight again</button><button class="btn green" onclick="go('bosses')">Boss Arena</button></div></div>`};
+BADGES.push(['boss1','⚔️','Boss Hunter','Defeat your first boss',()=>Object.keys(S.bosses).length>=1],['boss6','🏰','Boss Slayer','Defeat all 6 bosses',()=>Object.keys(S.bosses).length>=BOSSES.length],['virus5','🧫','Virus Expert','Score 100% in the Viruses quiz',()=>U('virus').best>=100]);
 
 /* ---------- start ---------- */
 go(S.name?'home':'welcome');
